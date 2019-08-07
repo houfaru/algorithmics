@@ -1,0 +1,55 @@
+Package com.algorithmics.sablecc ;
+    
+Helpers
+   all = [ 0 .. 0xFFFF];
+	digit = ['0' .. '9'];
+	lowercase = ['a' .. 'z'];
+	uppercase = ['A' .. 'Z'];
+	alpha = [lowercase + uppercase];
+	underscore = '_';
+	dash = '-';
+	extalpha = [underscore + alpha];
+	semicolon = ';';
+	tab = 9;
+	lf = 10;
+	cr = 13;
+	eol = cr lf | cr | lf;
+	not_cr_lf = [all - [cr + lf]];
+
+ 
+Tokens
+    lpar = '(';
+    rpar = ')';
+	blank = (' ' | tab | lf | cr)+;
+    and = 'AND'|'&';
+    or = 'OR'|'|'|'+';
+    not = 'NOT'|'-';
+    var = ( (extalpha | digit)*);
+
+Ignored Tokens
+	blank;
+ 
+Productions
+   sentence {->sentence} 
+   		=
+   		{or_sentence} [l]:sentence or [r]:term {->New sentence.or(l.sentence,r.sentence)}
+   		|{not_or_sentence} term {->term.sentence};
+
+	term  {->sentence}
+		=
+	    {and_sentence} [l]:term and [r]:factor {->New sentence.and(l.sentence,r.sentence)} 
+	    |{not_and_sentence} factor {->factor.sentence};
+	
+	factor   {->sentence}
+		= 
+	    {var} var{->New sentence.var(var)} 
+	    |{not_var} not var {->New sentence.notvar(var)}
+	    |{bracketed_sentence} lpar [s]:sentence rpar {->s.sentence}
+	    |{not_bracketed_sentence} not lpar [s]:sentence rpar {->New sentence.notsentence(s.sentence)};
+	    
+Abstract Syntax Tree
+sentence=	{and} [left]:sentence [right]:sentence |
+			{or} [left]:sentence [right]:sentence |
+			{var} var|
+			{notvar} var|
+			{notsentence} sentence;

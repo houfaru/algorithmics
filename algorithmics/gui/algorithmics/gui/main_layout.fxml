@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="algorithmics.gui.InstanceController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   
+   <left>
+      <VBox prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+         	<TreeView fx:id="problemTree" prefHeight="245.0" prefWidth="200.0" showRoot="true">
+            <root>
+         		<TreeItem fx:id="rootTreeItem" expanded="true" value="NP Problems" />
+            </root>
+      		</TreeView>
+            <TreeView id="solverTree" fx:id="solverTree" prefHeight="245.0" prefWidth="200.0" showRoot="true">
+               <root>
+                  <TreeItem fx:id="rootTreeItem1" expanded="true" value="Solvers" />
+               </root>
+            </TreeView>
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+   <TabPane fx:id="tabPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://www.w3.org/2001/XInclude">
+       <tabs>
+        <Tab fx:id="fooTabPage" text="Console">
+           <content>
+               <fx:include source="bottom_console_tab.fxml" />
+           </content>
+        </Tab>
+    </tabs>
+    </TabPane>
+   </bottom>
+   <center>
+   <TabPane fx:id="tabPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://www.w3.org/2001/XInclude">
+      <Tab fx:id="tab1" text="Untitled Tab 1">
+  		<content>
+    		<fx:include id="tab1" source="basic_execution_window.fxml"/>
+  		</content>
+	</Tab>
+	</TabPane>
+   </center>
+</BorderPane>
