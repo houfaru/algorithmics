@@ -146,7 +146,7 @@ public class SATSolverTest {
 			});
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
 	}
 
@@ -173,7 +173,7 @@ public class SATSolverTest {
 			});
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			fail(e.getMessage());
 		}
 
 	}
