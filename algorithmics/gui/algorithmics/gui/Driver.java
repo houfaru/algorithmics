@@ -12,33 +12,32 @@ import javafx.stage.Stage;
 
 
 @SuppressWarnings("deprecation")
-public class Driver extends Application implements PropertyChangeListener{
-	
-	public static void main(String[] args) {
-		launch(args);
-	}
+public class Driver extends Application {
+    Stage primaryStage;
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		final FXMLLoader loader = new FXMLLoader(getClass().getResource("main_layout.fxml"));
-		
-		final Parent root = loader.load();
-		
-        primaryStage.setTitle("Algorithmics");
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("main_layout.fxml"));
+
+        final Parent root = loader.load();
         
+        primaryStage.setTitle("Algorithmics");
+
         primaryStage.setScene(new Scene(root, 600, 500));
         primaryStage.show();
-        
-	}
+        primaryStage.setMaximized(true);
+        this.primaryStage = primaryStage;
 
-	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	
-	
-	
+    public void setTitle(String title) {
+        primaryStage.setTitle(title);
+    }
+
+
 
 }
