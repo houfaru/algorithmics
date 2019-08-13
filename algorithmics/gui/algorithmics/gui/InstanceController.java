@@ -21,27 +21,27 @@ public class InstanceController {
     @FXML
     ListView<String> solverList;
 
-
     public void initialize() {
 
         problemList.getItems().add("SAT");
         problemList.getItems().add("VertexCover");
         problemList.getItems().add("Knapsack");
-        
+
         solverList.getItems().add("DPLL");
         solverList.getItems().add("minisat C++");
         solverList.getItems().add("BruteForce");
-        // problemTree.setRoot(new TreeItem<String>("NP-Complete"));
-        //
-        // problemTree.getRoot().getChildren().add(new TreeItem<String>("SAT"));
-        // problemTree.getRoot().getChildren().add(new TreeItem<String>("VERTEX COVER"));
-        // problemTree.getRoot().getChildren().add(new TreeItem<String>("LINEAR PROGRAMMING"));
-        //
-        // solverTree.setRoot(new TreeItem<String>("Solver"));
-        // solverTree.getRoot().getChildren().add(new TreeItem<String>("DPLL"));
-        // solverTree.getRoot().getChildren().add(new TreeItem<String>("minisat C++ Core"));
-        // solverTree.getRoot().getChildren().add(new TreeItem<String>("Brute Force"));
 
+    }
+
+    @FXML
+    public void problemSelected() {
+        System.out.println("selecting " + problemList.getSelectionModel().getSelectedItem());
+
+    }
+
+    @FXML
+    public void solverSelected() {
+        System.out.println("selecting " + solverList.getSelectionModel().getSelectedItem());
     }
 
 }

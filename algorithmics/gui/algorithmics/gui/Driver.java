@@ -21,7 +21,7 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("main_layout.fxml"));
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("MainLayout.fxml"));
 
         final Parent root = loader.load();
         

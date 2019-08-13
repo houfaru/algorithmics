@@ -30,7 +30,7 @@
    <left>
       <VBox prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <fx:include source="leftPanel.fxml" />
+            <fx:include source="InstanceLayout.fxml" />
          </children>
       </VBox>
    </left>
@@ -39,7 +39,7 @@
        <tabs>
         <Tab fx:id="fooTabPage" closable="false" text="Console">
            <content>
-               <fx:include source="bottom_console_tab.fxml" />
+               <fx:include source="ConsoleLayout.fxml" />
            </content>
         </Tab>
     </tabs>
@@ -50,7 +50,7 @@
       <tabs>
          <Tab fx:id="tab1" closable="false" text="Execution">
      		<content>
-       		<fx:include id="tab1" source="basic_execution_window.fxml" />
+       		<fx:include id="tab1" source="ExecutionLayout.fxml" />
      		</content>
    	</Tab>
       </tabs>

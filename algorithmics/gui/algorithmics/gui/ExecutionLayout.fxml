@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="algorithmics.gui.ExecutionController">
    <children>
       <VBox prefHeight="353.0" prefWidth="603.0">
          <children>
@@ -12,7 +12,7 @@
             <TextArea prefHeight="200.0" prefWidth="200.0" />
             <Label text="Output" />
             <TextArea prefHeight="200.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" text="Execute" />
+            <Button mnemonicParsing="false" onAction="#execute" text="Execute" />
          </children>
       </VBox>
    </children>
