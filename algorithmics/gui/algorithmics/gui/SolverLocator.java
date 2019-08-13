@@ -12,16 +12,16 @@ public class SolverLocator {
     public static <S extends Solver<?, ?>> S getSolver(Class<S> clazz) {
         
         if (clazz.equals(SATBasedVCSolver.class)) {
-            clazz.cast(new SATBasedVCSolver());
+            return clazz.cast(new SATBasedVCSolver());
         }
         if (clazz.equals(DynKnapsackSolver.class)) {
-            clazz.cast(new DynKnapsackSolver());
+            return clazz.cast(new DynKnapsackSolver());
         }
         if (clazz.equals(SATSolverRecursive.class)) {
-            clazz.cast(new SATSolverRecursive());
+            return clazz.cast(new SATSolverRecursive());
         }
         if (clazz.equals(SATSolverSystemCall.class)) {
-            clazz.cast(new SATSolverSystemCall());
+            return clazz.cast(new SATSolverSystemCall());
         }
 
         return null;

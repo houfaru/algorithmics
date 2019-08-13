@@ -5,6 +5,6 @@ public class ConsoleController {
     @FXML
     TextArea feedBack;
     public void initialize() {
-        
+        feedBack.setText("Welcome....");
     }
 }

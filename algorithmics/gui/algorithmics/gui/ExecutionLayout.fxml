@@ -9,7 +9,7 @@
       <VBox prefHeight="353.0" prefWidth="603.0">
          <children>
             <Label text="Input" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" />
+            <TextArea fx:id="inputTextArea" prefHeight="200.0" prefWidth="200.0" />
             <Label text="Output" />
             <TextArea prefHeight="200.0" prefWidth="200.0" />
             <Button mnemonicParsing="false" onAction="#execute" text="Execute" />

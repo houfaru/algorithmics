@@ -21,7 +21,7 @@ public class InstanceController {
     @FXML
     ListView<String> solverList;
 
-    public void initialize() {
+    public void initialize() throws IOException {
 
         problemList.getItems().add("SAT");
         problemList.getItems().add("VertexCover");
@@ -30,6 +30,27 @@ public class InstanceController {
         solverList.getItems().add("DPLL");
         solverList.getItems().add("minisat C++");
         solverList.getItems().add("BruteForce");
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("ExecutionLayout.fxml"));
+
+        final Parent root = loader.load();
+        ExecutionController executionController = loader.getController();
+        problemList.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable,
+                            String oldValue, String newValue) {
+                        executionController.setProblem(newValue);
+                    }
+                });
+
+        solverList.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable,
+                            String oldValue, String newValue) {
+                        executionController.setSolver(newValue);
+                    }
+                });
 
     }
 
