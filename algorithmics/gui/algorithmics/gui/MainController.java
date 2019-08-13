@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 
 @SuppressWarnings("deprecation")
-public class Driver extends Application {
+public class MainController extends Application {
     Stage primaryStage;
 
     public static void main(String[] args) {

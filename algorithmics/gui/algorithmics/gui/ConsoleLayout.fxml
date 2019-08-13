@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.Button?>
-<VBox xmlns:fx="http://www.w3.org/2001/XInclude" fx:controller="algorithmics.gui.ConsoleController">
-    <TextArea fx:id="feedBack" editable="false" focusTraversable="false"
-layoutX="203.0" layoutY="32.0" prefHeight="170.0" prefWidth="308.0"
-wrapText="true"/>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="algorithmics.gui.ConsoleController">
+   <children>
+       <TextArea fx:id="feedBack" focusTraversable="false" layoutX="203.0" layoutY="32.0" prefHeight="170.0" prefWidth="308.0" wrapText="true" />
+   </children>
     
 </VBox>
