@@ -45,5 +45,9 @@ public class Literal extends Sentence{
 			return false;
 		}
 	}
+
+	public Variable getVariable() {
+	    return v;
+	}
 	
 }

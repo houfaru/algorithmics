@@ -2,6 +2,7 @@ package algorithmics.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -23,13 +24,15 @@ public class InstanceController {
 
     public void initialize() throws IOException {
 
+        ResourceBundle bundle = ResourceBundle.getBundle("i18");
+        Enumeration<String> keys = bundle.getKeys();
+        while(keys.hasMoreElements()) {
+            solverList.getItems().add(keys.nextElement());
+        }
         problemList.getItems().add("SAT");
         problemList.getItems().add("VertexCover");
         problemList.getItems().add("Knapsack");
 
-        solverList.getItems().add("DPLL");
-        solverList.getItems().add("minisat C++");
-        solverList.getItems().add("BruteForce");
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("ExecutionLayout.fxml"));
 
         final Parent root = loader.load();

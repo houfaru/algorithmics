@@ -15,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Button;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.beans.property.SimpleStringProperty;
 
 
 public class ExecutionController {
@@ -22,12 +23,11 @@ public class ExecutionController {
     private String problem;
     private String solver;
     private String input = "x AND y";
-
     @FXML
     public TextArea inputTextArea;
     @FXML
     public TextArea outputTextArea;
-
+    SimpleStringProperty line;
     public void initialize() {
         inputTextArea.setText("x AND y");
         inputTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -36,24 +36,20 @@ public class ExecutionController {
 
     }
 
-    public void reload() throws IOException {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("ExecutionLayout.fxml"));
-        final Parent root = loader.load();
-    }
+    
 
     public void execute() throws IOException {
 
-        reload();
-
         SATSolverRecursive satSolver = SolverLocator.getSolver(SATSolverRecursive.class);
         Optional<VariableAssignment> solution = satSolver.solve(input);
-        getConsole().append("solving...");
         outputTextArea.setText(String.valueOf(solution.isPresent()) + "\n");
         if (solution.isPresent()) {
             outputTextArea.appendText("assignment " + String.valueOf(solution.get()));
         }
-        getConsole().append("finished...");
-
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsoleLayout.fxml"));
+        final Parent root = loader.load();
+        ConsoleController consoleController = loader.getController();
+        consoleController.append("test");
     }
 
     public void setProblem(String problem) {
@@ -63,13 +59,6 @@ public class ExecutionController {
     public void setSolver(String solver) {
         System.out.println("selecting solver " + solver);
         this.solver = solver;
-    }
-
-    public ConsoleController getConsole() throws IOException {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsoleLayout.fxml"));
-        final Parent root = loader.load();
-        return loader.getController();
-
     }
 
 }

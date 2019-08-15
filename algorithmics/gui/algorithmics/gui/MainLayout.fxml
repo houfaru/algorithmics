@@ -35,11 +35,11 @@
       </VBox>
    </left>
    <bottom>
-   <TabPane fx:id="tabPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://www.w3.org/2001/XInclude">
+   <TabPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://www.w3.org/2001/XInclude">
        <tabs>
-        <Tab fx:id="fooTabPage" closable="false" text="Console">
+        <Tab closable="false" text="Console">
            <content>
-               <fx:include source="ConsoleLayout.fxml" />
+               <fx:include fx:id="console" source="ConsoleLayout.fxml" />
            </content>
         </Tab>
     </tabs>
