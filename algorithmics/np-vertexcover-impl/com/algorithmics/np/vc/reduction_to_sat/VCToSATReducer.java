@@ -3,11 +3,11 @@ package com.algorithmics.np.vc.reduction_to_sat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.algorithmics.ds.graphs.UndirectedGraph;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.core.Reducer;
-import com.algorithmics.np.vc.instance.PlainGraph;
 import com.algorithmics.np.vc.instance.VertexCover;
 import com.algorithmics.np.vc.instance.VertexCoverInstance;
 
@@ -20,7 +20,7 @@ public class VCToSATReducer implements Reducer<VertexCoverInstance, SentenceInCN
 	public SentenceInCNF reduce(VertexCoverInstance vcInstance) {
 		
 		int k=vcInstance.getK();
-		PlainGraph plainGraph = vcInstance.getPlainGraph();
+		UndirectedGraph plainGraph = vcInstance.getPlainGraph();
 		List<Integer> vertices = plainGraph.getVertices();
 		
 		//This is to constraint that at most K vertices are chosen
@@ -61,9 +61,9 @@ public class VCToSATReducer implements Reducer<VertexCoverInstance, SentenceInCN
 		List<Variable> trueAssignedVars = v.getTrueAssignedVars();
 		VertexCover vc=new VertexCover();
 		for(Variable var: trueAssignedVars) {
-			int vertex = getVertexFromVarRepresentation(var.toString());
-			vc.addVertex(vertex);
-		}
+            int vertex = getVertexFromVarRepresentation(var.toString());
+            vc.add(vertex);
+        }
 		
 		return vc;
 		

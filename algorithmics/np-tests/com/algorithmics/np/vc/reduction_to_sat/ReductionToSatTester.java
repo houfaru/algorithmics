@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-import com.algorithmics.np.vc.instance.PlainGraph;
+import com.algorithmics.ds.graphs.UndirectedGraph;
 import com.algorithmics.np.vc.instance.VertexCover;
 import com.algorithmics.np.vc.instance.VertexCoverInstance;
 import com.algorithmics.np.vc.preprocessing.TGFGraphReader;
@@ -18,7 +18,7 @@ public class ReductionToSatTester {
 	public void solveTGF() {
 		SATBasedVCSolver solver=new SATBasedVCSolver();
 		TGFGraphReader reader=new TGFGraphReader();
-		PlainGraph graph=reader.readFromFile("data/graph.tgf");
+		UndirectedGraph graph=reader.readFromFile("data/graph.tgf");
 		
 		VertexCoverInstance instance=new VertexCoverInstance(graph, 3);
 		Optional<VertexCover> solution = solver.solve(instance);

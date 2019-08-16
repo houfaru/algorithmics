@@ -1,4 +1,4 @@
-package algorithmics.gui;
+package com.algorithmics.gui;
 
 
 import java.beans.PropertyChangeEvent;
@@ -15,10 +15,14 @@ import javafx.stage.Stage;
 
 @SuppressWarnings("deprecation")
 public class MainController extends Application {
+    
     Stage primaryStage;
     
     @FXML
     ConsoleController consoleController;
+    
+    @FXML
+    ExecutionController executionController;
 
     public static void main(String[] args) {
         launch(args);
@@ -34,11 +38,16 @@ public class MainController extends Application {
         primaryStage.setScene(new Scene(root, 600, 500));
         primaryStage.show();
         primaryStage.setMaximized(true);
-        final FXMLLoader consoleloader = new FXMLLoader(getClass().getResource("ConsoleLayout.fxml"));
-        System.out.println(consoleController.getLine());
         this.primaryStage = primaryStage;
         
-
+        final FXMLLoader consoleLoader = new FXMLLoader(getClass().getResource("ConsoleLayout.fxml"));
+        consoleLoader.load();
+        ConsoleController consoleController = consoleLoader.getController();
+        
+        final FXMLLoader executionLoader = new FXMLLoader(getClass().getResource("ExecutionLayout.fxml"));
+        executionLoader.load();
+        ExecutionController executionController = executionLoader.getController();
+        executionController.line.bindBidirectional(consoleController.log);
     }
 
     public void setTitle(String title) {

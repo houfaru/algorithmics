@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="algorithmics.gui.InstanceController">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.algorithmics.gui.InstanceController">
    <children>
       <Label text="Problem" />
       <ListView fx:id="problemList" onMouseClicked="#problemSelected" prefHeight="200.0" prefWidth="200.0" />

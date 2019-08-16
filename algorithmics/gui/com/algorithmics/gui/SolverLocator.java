@@ -1,4 +1,4 @@
-package algorithmics.gui;
+package com.algorithmics.gui;
 
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
 import com.algorithmics.np.core.Solver;

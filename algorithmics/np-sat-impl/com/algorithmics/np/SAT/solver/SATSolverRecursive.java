@@ -17,9 +17,9 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
 
     @Override
     public Optional<VariableAssignment> solve(SentenceInCNF sentence) {
-
+        
         SentenceInCNF newSentence = sentence.removePureLiterals();
-
+        
         List<Clause> unitClauses = newSentence.getUnitClauses();
         VariableAssignment unitVA = new VariableAssignment();
         for (Clause c : unitClauses) {

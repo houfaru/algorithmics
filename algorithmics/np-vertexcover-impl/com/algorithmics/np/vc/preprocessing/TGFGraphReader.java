@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.algorithmics.ds.graphs.UndirectedGraph;
 import com.algorithmics.np.preprocessor.SpecificFormatReader;
-import com.algorithmics.np.vc.instance.PlainGraph;
 
-public class TGFGraphReader implements SpecificFormatReader<PlainGraph>{
+public class TGFGraphReader implements SpecificFormatReader<UndirectedGraph>{
 
 	@Override
-	public PlainGraph readFromFile(String filePath) {
+	public UndirectedGraph readFromFile(String filePath) {
 		try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
 			List<String> lines = stream.collect(Collectors.toList());
-			PlainGraph graph=new PlainGraph();
+			UndirectedGraph graph=new UndirectedGraph();
 			boolean processingEdge=false;
 			for(String line:lines) {
 				if(line.startsWith("#")) {

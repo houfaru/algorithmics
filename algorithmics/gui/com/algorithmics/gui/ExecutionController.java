@@ -1,4 +1,4 @@
-package algorithmics.gui;
+package com.algorithmics.gui;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -27,12 +27,14 @@ public class ExecutionController {
     public TextArea inputTextArea;
     @FXML
     public TextArea outputTextArea;
-    SimpleStringProperty line;
+    static SimpleStringProperty line;
     public void initialize() {
         inputTextArea.setText("x AND y");
         inputTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
             input = newValue;
         });
+        line=new SimpleStringProperty("execution line");
+        
 
     }
 
@@ -46,10 +48,8 @@ public class ExecutionController {
         if (solution.isPresent()) {
             outputTextArea.appendText("assignment " + String.valueOf(solution.get()));
         }
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsoleLayout.fxml"));
-        final Parent root = loader.load();
-        ConsoleController consoleController = loader.getController();
-        consoleController.append("test");
+        line.set("okay");
+        System.out.println(line.getValue());
     }
 
     public void setProblem(String problem) {

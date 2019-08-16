@@ -1,4 +1,4 @@
-package algorithmics.gui;
+package com.algorithmics.gui;
 
 import java.io.IOException;
 import java.net.URL;
