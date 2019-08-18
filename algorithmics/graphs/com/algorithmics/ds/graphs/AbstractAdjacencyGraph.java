@@ -2,11 +2,10 @@ package com.algorithmics.ds.graphs;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import com.algorithmics.ds.graphs.visitor.BreadthFirstSearchIterable;
+import com.algorithmics.ds.graphs.algorithms.BFSGraphIterator;
 
 public abstract class AbstractAdjacencyGraph implements Graph {
 
@@ -15,10 +14,10 @@ public abstract class AbstractAdjacencyGraph implements Graph {
 
     public boolean canReach(int sourceVertex, int destinationVertex) {
 
-        BreadthFirstSearchIterable bfs = new BreadthFirstSearchIterable(this, sourceVertex);
-        Iterator<Integer> iterator = bfs.iterator();
-        while (iterator.hasNext()) {
-            int nextVertex = iterator.next();
+        final BFSGraphIterator bfsIterator = new BFSGraphIterator(this, sourceVertex);
+
+        while (bfsIterator.hasNext()) {
+            int nextVertex = bfsIterator.next();
             if (nextVertex == destinationVertex) {
                 return true;
             }
@@ -36,24 +35,25 @@ public abstract class AbstractAdjacencyGraph implements Graph {
 
     @Override
     public boolean containsEdge(int v, int w) {
-        HashSet<Integer> neighbors = adjacencyList.get(v);
+        final HashSet<Integer> neighbors = adjacencyList.get(v);
         return null != neighbors && neighbors.contains(w);
     }
 
     @Override
     public Set<Integer> getNeighbors(int v) {
-        HashSet<Integer> neighbors = adjacencyList.get(v);
+        final HashSet<Integer> neighbors = adjacencyList.get(v);
         return null == neighbors ? new HashSet<>() : new HashSet<Integer>(neighbors);
-    }
-
-    public HashMap<Integer, HashSet<Integer>> getAdjacencyList() {
-        return new HashMap<Integer, HashSet<Integer>>(adjacencyList);
     }
 
     @Override
     public int getNumOfVertices() {
         return adjacencyList.keySet().size();
     }
+
+    public HashMap<Integer, HashSet<Integer>> getAdjacencyList() {
+        return new HashMap<Integer, HashSet<Integer>>(adjacencyList);
+    }
+
 
 
 }

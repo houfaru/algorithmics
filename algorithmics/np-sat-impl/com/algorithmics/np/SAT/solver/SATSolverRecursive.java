@@ -20,10 +20,10 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         
         SentenceInCNF newSentence = sentence.removePureLiterals();
         
-        List<Clause> unitClauses = newSentence.getUnitClauses();
-        VariableAssignment unitVA = new VariableAssignment();
+        final List<Clause> unitClauses = newSentence.getUnitClauses();
+        final VariableAssignment unitVA = new VariableAssignment();
         for (Clause c : unitClauses) {
-            Literal literal = c.getLiterals().stream().findAny().get();
+            final Literal literal = c.getLiterals().stream().findAny().get();
             newSentence = newSentence.assignOneVariableAndReduce(
                     literal.getVariables().stream().findAny().get(), !literal.isNegated());
             unitVA.assign(literal.getVariable(), !literal.isNegated());
@@ -36,21 +36,21 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
             return Optional.empty();
         }
 
-        HashSet<Variable> variables = newSentence.getVariables();
-        Variable oneOfTheVariable = variables.stream().findAny().get();
+        final HashSet<Variable> variables = newSentence.getVariables();
+        final Variable oneOfTheVariable = variables.stream().findAny().get();
 
-        SentenceInCNF firstReducedSentence =
+        final SentenceInCNF firstReducedSentence =
                 newSentence.assignOneVariableAndReduce(oneOfTheVariable, true);
-        Optional<VariableAssignment> firstSentenceSolution = solve(firstReducedSentence);
+        final Optional<VariableAssignment> firstSentenceSolution = solve(firstReducedSentence);
         if (firstSentenceSolution.isPresent()) {
             firstSentenceSolution.get().assign(oneOfTheVariable, true);
             firstSentenceSolution.get().assignAll(unitVA);
             return firstSentenceSolution;
         }
 
-        SentenceInCNF secondReducedSentence =
+        final SentenceInCNF secondReducedSentence =
                 newSentence.assignOneVariableAndReduce(oneOfTheVariable, false);
-        Optional<VariableAssignment> secondSentenceSolution = solve(secondReducedSentence);
+        final Optional<VariableAssignment> secondSentenceSolution = solve(secondReducedSentence);
         if (secondSentenceSolution.isPresent()) {
             secondSentenceSolution.get().assign(oneOfTheVariable, false);
             secondSentenceSolution.get().assignAll(unitVA);
@@ -61,9 +61,9 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
     }
 
     public Optional<VariableAssignment> solve(String sentence) {
-        SATParser parser = new SATParser();
-        SentenceTree s = parser.parse(sentence);
-        SentenceInCNF p = s.toCNF();
+        final SATParser parser = new SATParser();
+        final SentenceTree s = parser.parse(sentence);
+        final SentenceInCNF p = s.toCNF();
         return solve(p);
     }
 

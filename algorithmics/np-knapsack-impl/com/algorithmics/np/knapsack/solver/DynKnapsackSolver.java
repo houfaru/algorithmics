@@ -12,9 +12,9 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag>{
 
 	@Override
 	public Optional<Bag> solve(KnapsackInstance p) {
-		int bagCapacity = p.getBagCapacity();
-		List<Item> items = p.getItems();
-		Bag [][]bags=new Bag[items.size()+1][bagCapacity+1];
+		final int bagCapacity = p.getBagCapacity();
+		final List<Item> items = p.getItems();
+		final Bag [][]bags=new Bag[items.size()+1][bagCapacity+1];
 		
 		for(int curWeight=0;curWeight<=bagCapacity;curWeight++) {
 			bags[0][curWeight]=new Bag(curWeight, items);
@@ -27,12 +27,12 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag>{
 		for(int itemCount=1;itemCount<=items.size();itemCount++) {
 			for(int curWeight=1;curWeight<=bagCapacity;curWeight++) {
 			
-				Item currentItem = items.get(itemCount-1);
-				Bag oldBagWithoutItem=bags[itemCount-1][curWeight];
+			    final Item currentItem = items.get(itemCount-1);
+			    final Bag oldBagWithoutItem=bags[itemCount-1][curWeight];
 				
 				if(curWeight>=currentItem.getWeight()) {
-					Bag prevBagWithCapaForNewItem=bags[itemCount-1][curWeight-currentItem.getWeight()];
-					Bag newBagWithNewItem=Bag.newBagWithItemFrom(prevBagWithCapaForNewItem, curWeight);
+					final Bag prevBagWithCapaForNewItem=bags[itemCount-1][curWeight-currentItem.getWeight()];
+					final Bag newBagWithNewItem=Bag.newBagWithItemFrom(prevBagWithCapaForNewItem, curWeight);
 					newBagWithNewItem.put(currentItem);
 					if(newBagWithNewItem.getValue()>oldBagWithoutItem.getValue()) {
 						bags[itemCount][curWeight]=newBagWithNewItem;

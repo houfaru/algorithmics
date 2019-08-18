@@ -25,7 +25,7 @@ public class SentenceTree extends Sentence {
     protected SentenceTree() {};
 
     public static SentenceTree constractLeafTree(Variable var) {
-        SentenceTree leafTree = new SentenceTree();
+        final SentenceTree leafTree = new SentenceTree();
         leafTree.var = Optional.of(var);
         leafTree.operation = Optional.empty();
         leafTree.subTrees = Optional.empty();
@@ -34,7 +34,7 @@ public class SentenceTree extends Sentence {
 
     public static SentenceTree constructNonLeafTree(BooleanOperationEnum op, SentenceTree firstTree,
             SentenceTree secondTree, SentenceTree... otherTrees) {
-        SentenceTree nonLeafTree = new SentenceTree();
+        final SentenceTree nonLeafTree = new SentenceTree();
         nonLeafTree.var = Optional.empty();
         nonLeafTree.subTrees = Optional.of(new ArrayList<>());
         nonLeafTree.subTrees.get().add(firstTree);
@@ -46,7 +46,7 @@ public class SentenceTree extends Sentence {
 
     @Override
     public HashSet<Variable> getVariables() {
-        HashSet<Variable> variableSet = new HashSet<Variable>();
+        final HashSet<Variable> variableSet = new HashSet<Variable>();
         if (isLeaf()) {
             if (!var.isPresent()) {
                 throw new RuntimeException(
@@ -133,9 +133,9 @@ public class SentenceTree extends Sentence {
             if (!subTrees.isPresent()) {
                 throw new RuntimeException("Internal Error: subtrees undefined on nonleaf node");
             }
-            String operatorSymbol =
+            final String operatorSymbol =
                     operation.get().toString().equals("AND") ? Symbol.AND + "" : Symbol.OR + "";
-            StringJoiner stringJoiner = new StringJoiner(" " + operatorSymbol + " ");
+            final StringJoiner stringJoiner = new StringJoiner(" " + operatorSymbol + " ");
             for (SentenceTree subTree : subTrees.get()) {
                 stringJoiner.add(subTree.toString());
             }
@@ -170,30 +170,30 @@ public class SentenceTree extends Sentence {
     public SentenceInCNF toCNF() {
         propagateNegation();
         if (isLeaf()) {
-            List<Literal> literals = new ArrayList<Literal>();
-            Literal literal = new Literal(this.var.get());
+            final List<Literal> literals = new ArrayList<Literal>();
+            final Literal literal = new Literal(this.var.get());
             literal.setNegated(this.isNegated());
             literals.add(literal);
-            Clause c = new Clause(literals);
-            List<Clause> clauses = new ArrayList<Clause>();
+            final Clause c = new Clause(literals);
+            final List<Clause> clauses = new ArrayList<Clause>();
             clauses.add(c);
-            SentenceInCNF s = new SentenceInCNF(clauses);
+            final SentenceInCNF s = new SentenceInCNF(clauses);
             return s;
         }
         if (this.operation.get().equals(BooleanOperationEnum.OR) && this.getDepth() == 1) {
-            SentenceInCNF s = SentenceInCNF.constructMinimalTrueSentence();
-            List<Literal> literals = new ArrayList<Literal>();
+            final SentenceInCNF s = SentenceInCNF.constructMinimalTrueSentence();
+            final List<Literal> literals = new ArrayList<Literal>();
 
             for (SentenceTree subTree : subTrees.get()) {
                 SentenceInCNF subCNF = subTree.toCNF();
                 literals.addAll(subCNF.getClauses().get(0).getLiterals());
             }
-            Clause newClause = new Clause(literals);
+            final Clause newClause = new Clause(literals);
             s.getClauses().add(newClause);
             return s;
         }
         if (this.operation.get().equals(BooleanOperationEnum.AND)) {
-            SentenceInCNF newCNF = SentenceInCNF.constructMinimalTrueSentence();
+            final SentenceInCNF newCNF = SentenceInCNF.constructMinimalTrueSentence();
             for (SentenceTree subTree : subTrees.get()) {
                 SentenceInCNF subCNF = subTree.toCNF();
                 newCNF.getClauses().addAll(subCNF.getClauses());
@@ -214,7 +214,7 @@ public class SentenceTree extends Sentence {
     }
 
     private SentenceInCNF crossProduct(SentenceInCNF firstTrees, SentenceInCNF secondTrees) {
-        SentenceInCNF newCNF = SentenceInCNF.constructMinimalTrueSentence();
+        final SentenceInCNF newCNF = SentenceInCNF.constructMinimalTrueSentence();
         if (firstTrees.isTautology().isPresent() && firstTrees.isTautology().get()) {
             return secondTrees;
         }

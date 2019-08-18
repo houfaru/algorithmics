@@ -5,9 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Graph which allows:<br>
- * - loop<br>
- * - direction (also both sides)
+ * Graph which allows direction (one direction, both) but no loops
  *
  */
 public class DirectedGraph extends AbstractAdjacencyGraph {

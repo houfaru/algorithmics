@@ -1,9 +1,11 @@
 package com.algorithmics.np.knapsack.instance;
 
 public class Item {
-	private String name;
-	private int value;
-	private int weight;
+	
+    private final String name;
+	private final int value;
+	private final int weight;
+	
 	public Item(String name, int value, int weight) {
 		super();
 		this.name = name;

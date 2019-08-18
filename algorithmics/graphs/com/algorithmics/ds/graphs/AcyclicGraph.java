@@ -5,7 +5,7 @@ package com.algorithmics.ds.graphs;
  * A strictly directed graph which does not allow cycle.
  *
  */
-public class PartialOrderGraph extends DirectedGraph {
+public class AcyclicGraph extends DirectedGraph {
     @Override
     public void addEdge(int v, int w) {
         if (canReach(w, v)) {

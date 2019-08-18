@@ -8,10 +8,14 @@ import java.util.stream.Collectors;
 import com.algorithmics.np.core.Certificate;
 
 public class Bag implements Certificate {
-	private int bagCapacity;
+    
+	private final int bagCapacity;
+	private final List<Item> items;
+	
 	private int curWeightSum;
 	private Map<Item, Boolean> isItemPicked = new HashMap<>();
-	private List<Item> items;
+	
+	
 	public Bag(int bagCapacity, List<Item> items) {
 		this.bagCapacity = bagCapacity;
 		this.curWeightSum = 0;
