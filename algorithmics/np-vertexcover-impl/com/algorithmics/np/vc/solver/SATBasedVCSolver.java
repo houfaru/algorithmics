@@ -21,7 +21,7 @@ public class SATBasedVCSolver implements Solver<VertexCoverInstance, VertexCover
 		if(!solution.isPresent()) {
 			return Optional.empty();
 		}else {
-			return Optional.of(reducer.certificateReducer(solution.get()));
+			return Optional.of(reducer.interpretCertificate(solution.get()));
 		}
 	}	
 	
