@@ -1,11 +1,10 @@
 package com.algorithmics.gui;
 
+import com.algorithmics.minisat.MiniSatSystemCallSATSolver;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
 import com.algorithmics.np.core.Solver;
 import com.algorithmics.np.knapsack.solver.DynKnapsackSolver;
 import com.algorithmics.np.vc.solver.SATBasedVCSolver;
-
-import algorithmics.minisat.SATSolverSystemCall;
 
 public class SolverLocator {
     
@@ -20,8 +19,8 @@ public class SolverLocator {
         if (clazz.equals(SATSolverRecursive.class)) {
             return clazz.cast(new SATSolverRecursive());
         }
-        if (clazz.equals(SATSolverSystemCall.class)) {
-            return clazz.cast(new SATSolverSystemCall());
+        if (clazz.equals(MiniSatSystemCallSATSolver.class)) {
+            return clazz.cast(new MiniSatSystemCallSATSolver());
         }
 
         return null;

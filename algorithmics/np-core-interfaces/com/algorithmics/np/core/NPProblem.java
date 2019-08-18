@@ -1,5 +1,5 @@
 package com.algorithmics.np.core;
 
-public interface NPProblem {
-
+public interface NPProblem<CERTIFICATE extends Certificate> {
+    public boolean verify(CERTIFICATE certificate);
 }

@@ -1,4 +1,4 @@
-package algorithmics.minisat;
+package com.algorithmics.minisat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import com.algorithmics.np.core.Solver;
  * This class depends on minisat {@link http://minisat.se/}<br>
  *
  */
-public class SATSolverSystemCall implements Solver<SentenceInCNF, VariableAssignment> {
+public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, VariableAssignment> {
     private String outputFilePath = "out.txt";
 
     @Override

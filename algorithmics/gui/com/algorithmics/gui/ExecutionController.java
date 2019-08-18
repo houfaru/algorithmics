@@ -3,10 +3,10 @@ package com.algorithmics.gui;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.algorithmics.minisat.MiniSatSystemCallSATSolver;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
 
-import algorithmics.minisat.SATSolverSystemCall;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;

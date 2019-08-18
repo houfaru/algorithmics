@@ -6,28 +6,32 @@ import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
 
-public abstract class SatBasedSolver<P extends NPProblem, C extends Certificate> {
+public class SatBasedSolver<NP_CERTIFICATE extends Certificate, NP_PROBLEM extends NPProblem<NP_CERTIFICATE>>
+        implements Solver<NP_PROBLEM, NP_CERTIFICATE> {
 
-    private Reducer<P, SentenceInCNF> reducer;
+    private Reducer<NP_CERTIFICATE, NP_PROBLEM, VariableAssignment, SentenceInCNF> reducer;
+    private SATSolverRecursive satSolver = new SATSolverRecursive();
 
-    public SatBasedSolver(Reducer<P, SentenceInCNF> reducer) {
+    public SatBasedSolver(
+            Reducer<NP_CERTIFICATE, NP_PROBLEM, VariableAssignment, SentenceInCNF> reducer) {
         super();
         this.reducer = reducer;
     }
 
-    public Optional<C> solve(P p) {
-
+    public Optional<NP_CERTIFICATE> solve(NP_PROBLEM p) {
         SentenceInCNF sentence = reducer.reduce(p);
-        SATSolverRecursive satSolver = new SATSolverRecursive();
+
         Optional<VariableAssignment> solve = satSolver.solve(sentence);
+        if (solve.isPresent()) {
+            return Optional.of(reducer.interpretCertificate(solve.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
 
-        return interpretCertificate(solve);
+    @Override
+    public boolean verify(NP_PROBLEM p, NP_CERTIFICATE sc) {
+        return p.verify(sc);
+
     };
-
-
-    protected abstract Optional<C> interpretCertificate(Optional<VariableAssignment> solve);
-
-    public abstract boolean verify(P p, C sc);
-
-
 }

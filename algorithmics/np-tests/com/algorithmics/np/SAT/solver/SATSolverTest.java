@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.junit.Test;
 
+import com.algorithmics.minisat.MiniSatSystemCallSATSolver;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.Clause;
@@ -19,8 +20,6 @@ import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.DimacsReader;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
-
-import algorithmics.minisat.SATSolverSystemCall;
 
 public class SATSolverTest {
 
@@ -162,7 +161,7 @@ public class SATSolverTest {
 	@Test
 	public void testAlotOfUnsatisfiableInstance() {
 
-		SATSolverSystemCall solver = new SATSolverSystemCall();
+		MiniSatSystemCallSATSolver solver = new MiniSatSystemCallSATSolver();
 		try {
 			Files.list(Paths.get("data/uuf50-218")).forEach(p -> {
 				String satSentenceFilePath = p.toString();

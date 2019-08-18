@@ -2,7 +2,8 @@ package com.algorithmics.np.core;
 
 import java.util.Optional;
 
-public interface Solver<P extends NPProblem,S extends Certificate> {
-	public Optional<S> solve(P  p) ;
-	public boolean verify(P p,S sc) ;
+public interface Solver<NP_PROBLEM extends NPProblem<CERTIFICATE>, CERTIFICATE extends Certificate> {
+    public Optional<CERTIFICATE> solve(NP_PROBLEM p);
+
+    public boolean verify(NP_PROBLEM p, CERTIFICATE sc);
 }

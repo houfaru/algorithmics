@@ -2,34 +2,26 @@ package com.algorithmics.ds.graphs;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
+
+import com.algorithmics.ds.graphs.visitor.BreadthFirstSearchIterable;
 
 public abstract class AbstractAdjacencyGraph implements Graph {
 
-    protected HashMap<Integer, HashSet<Integer>> adjacencyList =
+    protected Map<Integer, HashSet<Integer>> adjacencyList =
             new HashMap<Integer, HashSet<Integer>>();
 
     public boolean canReach(int sourceVertex, int destinationVertex) {
 
-        Stack<Integer> remainingVertices = new Stack<>();
-        Set<Integer> visited = new HashSet<>();
-
-        remainingVertices.push(sourceVertex);
-        while (!remainingVertices.isEmpty()) {
-            Integer currentVertex = remainingVertices.pop();
-
-            if (visited.contains(currentVertex)) {
-                continue;
-            }
-
-            if (currentVertex == destinationVertex) {
+        BreadthFirstSearchIterable bfs = new BreadthFirstSearchIterable(this, sourceVertex);
+        Iterator<Integer> iterator = bfs.iterator();
+        while (iterator.hasNext()) {
+            int nextVertex = iterator.next();
+            if (nextVertex == destinationVertex) {
                 return true;
             }
-            visited.add(currentVertex);
-            Set<Integer> neighbors = getNeighbors(currentVertex);
-            neighbors.removeAll(visited);
-            remainingVertices.addAll(neighbors);
         }
         return false;
     }

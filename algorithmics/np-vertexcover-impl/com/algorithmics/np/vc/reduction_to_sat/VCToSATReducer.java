@@ -11,7 +11,8 @@ import com.algorithmics.np.core.Reducer;
 import com.algorithmics.np.vc.instance.VertexCover;
 import com.algorithmics.np.vc.instance.VertexCoverInstance;
 
-public class VCToSATReducer implements Reducer<VertexCoverInstance, SentenceInCNF> {
+public class VCToSATReducer
+        implements Reducer<VertexCover, VertexCoverInstance, VariableAssignment, SentenceInCNF> {
 
     /**
      * {@link Programming in Propositional Logic or Reductions: Back to the Roots (Satisability)
@@ -58,6 +59,7 @@ public class VCToSATReducer implements Reducer<VertexCoverInstance, SentenceInCN
 
     }
 
+    @Override
     public VertexCover interpretCertificate(VariableAssignment v) {
         List<Variable> trueAssignedVars = v.getTrueAssignedVars();
         VertexCover vc = new VertexCover();

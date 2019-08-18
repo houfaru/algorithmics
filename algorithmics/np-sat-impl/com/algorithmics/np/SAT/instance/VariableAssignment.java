@@ -8,6 +8,7 @@ import com.algorithmics.np.core.Certificate;
 import com.algorithmics.util.Symbol;
 
 public class VariableAssignment implements Certificate {
+    
     private HashMap<Variable, Boolean> varValueMap = new HashMap<Variable, Boolean>();
 
     public static VariableAssignment constructEmptyAssignment() {

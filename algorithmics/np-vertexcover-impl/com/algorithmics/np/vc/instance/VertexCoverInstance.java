@@ -39,4 +39,6 @@ public class VertexCoverInstance implements NPHardProblem<VertexCover> {
         }
         return false;
     }
+
+
 }
