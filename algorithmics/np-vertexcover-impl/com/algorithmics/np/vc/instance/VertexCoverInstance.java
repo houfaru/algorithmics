@@ -1,17 +1,19 @@
 package com.algorithmics.np.vc.instance;
 
-import java.util.HashSet;
+import java.util.function.Predicate;
 
+import com.algorithmics.ds.graphs.Edge;
 import com.algorithmics.ds.graphs.UndirectedGraph;
 import com.algorithmics.np.core.NPHardProblem;
 
 public class VertexCoverInstance implements NPHardProblem<VertexCover> {
-    private final UndirectedGraph plainGraph;
+
+    private final UndirectedGraph undirectedGraph;
     private final int k;
 
-    public VertexCoverInstance(UndirectedGraph g, int k) {
+    public VertexCoverInstance(UndirectedGraph undirectedGraph, int k) {
         this.k = k;
-        this.plainGraph = g;
+        this.undirectedGraph = undirectedGraph;
     }
 
     public int getK() {
@@ -19,25 +21,20 @@ public class VertexCoverInstance implements NPHardProblem<VertexCover> {
     }
 
     public UndirectedGraph getPlainGraph() {
-        return plainGraph;
+        return undirectedGraph;
     }
 
     @Override
     public boolean verify(VertexCover certificate) {
         if (certificate.getVertices().size() > k) {
             return false;
+        } else {
+            Predicate<Edge> isCovered = edge -> certificate.contains(edge.getFrom())
+                    || certificate.contains(edge.getTo());
+            return undirectedGraph.getEdges().allMatch(isCovered);
         }
-        HashSet<Integer> coveredNode = new HashSet<>();
-        for (Integer vertex : certificate.getVertices()) {
-            if (plainGraph.containsVertex(vertex)) {
-                coveredNode.add(vertex);
-                coveredNode.addAll(plainGraph.getNeighbors(vertex));
-            }
-            if (plainGraph.getNumOfVertices() == coveredNode.size()) {
-                return true;
-            }
-        }
-        return false;
+
+
     }
 
 

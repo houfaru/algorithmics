@@ -8,7 +8,7 @@ import java.util.Optional;
 import com.algorithmics.np.SAT.instance.Sentence;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
-import com.algorithmics.util.Symbol;
+import com.algorithmics.np.SAT.util.Symbol;
 
 public class Clause extends Sentence{
 	private Optional<List<Literal>>literals;

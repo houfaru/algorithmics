@@ -1,8 +1,6 @@
 package com.algorithmics.ds.graphs;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * Graph which allows direction (one direction, both) but no loops
@@ -19,11 +17,6 @@ public class DirectedGraph extends AbstractAdjacencyGraph {
         } else {
             return false;
         }
-    }
-
-    public List<Integer> getVertices() {
-        List<Integer> list = new ArrayList<Integer>(adjacencyList.keySet());
-        return list;
     }
 
     @Override

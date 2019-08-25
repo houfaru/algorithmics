@@ -40,19 +40,26 @@ public class WeightedGraph<T extends Graph> implements Graph {
         return graph.getNodes();
     }
 
-    public void addEdge(int v, int w, double weight) {
+    public void addWeightedEdge(int v, int w, double weight) {
         graph.addEdge(v, w);
-        Edge pair = new Edge(v, w);
-        weights.put(pair, weight);
+
         if (graph instanceof UndirectedGraph) {
-            Edge reversePair = new Edge(w, v);
-            weights.put(reversePair, weight);
+            Edge edge = new UndirectedEdge(w, v);
+            weights.put(edge, weight);
+        } else {
+            Edge edge = new Edge(w, v);
+            weights.put(edge, weight);
         }
     }
 
     public double getWeight(int v, int w) {
-        Edge pair = new Edge(v, w);
-        return weights.computeIfAbsent(pair, k -> 0d);
+        if (graph instanceof UndirectedGraph) {
+            Edge edge = new UndirectedEdge(w, v);
+            return weights.computeIfAbsent(edge, e -> 0d);
+        } else {
+            Edge edge = new Edge(w, v);
+            return weights.computeIfAbsent(edge, e -> 0d);
+        }
     }
 
     public void setWeight(int v, int w, double weight) {

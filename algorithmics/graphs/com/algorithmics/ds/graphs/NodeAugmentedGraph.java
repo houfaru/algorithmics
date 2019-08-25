@@ -4,21 +4,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public abstract class NodeAugmentedGraph<G extends Graph, T> implements Graph {
+public abstract class NodeAugmentedGraph<G extends Graph, L> implements Graph {
 
     private G decoratedGraph;
 
-    private Map<Integer, T> augmentedInformation;
+    private Map<Integer, L> augmentedInformation;
 
     public NodeAugmentedGraph(G decoratedGraph) {
         this.decoratedGraph = decoratedGraph;
     }
 
-    protected T getAugmentedInformation(int v) {
+    protected L getAugmentedInformation(int v) {
         return augmentedInformation.get(v);
     }
 
-    protected void setAugmentedInformation(int v, T t) {
+    protected void setAugmentedInformation(int v, L t) {
         augmentedInformation.put(v, t);
     }
 

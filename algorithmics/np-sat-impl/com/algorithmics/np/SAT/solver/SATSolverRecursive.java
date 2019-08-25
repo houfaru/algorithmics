@@ -14,12 +14,18 @@ import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.core.Solver;
 
 public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignment> {
-
+    /**
+     * Solves a SAT instance as follows:
+     * 
+     * 1. remove pure literals<br>
+     * 2. get one of the variables<br>
+     * 3. branch into two recursive calls by assigning TRUE and FALSE to the acquired variable<br>
+     */
     @Override
     public Optional<VariableAssignment> solve(SentenceInCNF sentence) {
-        
+
         SentenceInCNF newSentence = sentence.removePureLiterals();
-        
+
         final List<Clause> unitClauses = newSentence.getUnitClauses();
         final VariableAssignment unitVA = new VariableAssignment();
         for (Clause c : unitClauses) {
@@ -28,7 +34,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
                     literal.getVariables().stream().findAny().get(), !literal.isNegated());
             unitVA.assign(literal.getVariable(), !literal.isNegated());
         }
-        
+
         if (newSentence.getClauses().size() == 0) {
             return Optional.of(VariableAssignment.constructEmptyAssignment());
         }
@@ -68,8 +74,8 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
     }
 
     @Override
-    public boolean verify(SentenceInCNF p, VariableAssignment sc) {
-        return p.verify(sc);
+    public boolean verify(SentenceInCNF sentence, VariableAssignment variableAssignment) {
+        return sentence.verify(variableAssignment);
 
     }
 

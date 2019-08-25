@@ -44,8 +44,4 @@ public class PSchedullingGreedySolver implements Solver<PSchedullingInstance, Ta
         return false;
     }
 
-    private void computeRanks() {
-        
-    }
-
 }

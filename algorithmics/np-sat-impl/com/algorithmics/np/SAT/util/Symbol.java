@@ -1,4 +1,4 @@
-package com.algorithmics.util;
+package com.algorithmics.np.SAT.util;
 
 public class Symbol {
     public static char NOT = (char) 172;

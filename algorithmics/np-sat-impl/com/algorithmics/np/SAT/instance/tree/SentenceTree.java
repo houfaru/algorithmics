@@ -14,7 +14,7 @@ import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.Clause;
 import com.algorithmics.np.SAT.instance.CNF.Literal;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
-import com.algorithmics.util.Symbol;
+import com.algorithmics.np.SAT.util.Symbol;
 
 public class SentenceTree extends Sentence {
 

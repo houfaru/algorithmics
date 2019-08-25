@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import com.algorithmics.np.SAT.instance.Sentence;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
-import com.algorithmics.util.Symbol;
+import com.algorithmics.np.SAT.util.Symbol;
 
 public class SentenceInCNF extends Sentence {
 

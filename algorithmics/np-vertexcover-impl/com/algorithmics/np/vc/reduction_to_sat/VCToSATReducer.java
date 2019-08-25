@@ -2,6 +2,7 @@ package com.algorithmics.np.vc.reduction_to_sat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.algorithmics.ds.graphs.UndirectedGraph;
 import com.algorithmics.np.SAT.instance.Variable;
@@ -23,7 +24,7 @@ public class VCToSATReducer
 
         int k = vcInstance.getK();
         UndirectedGraph plainGraph = vcInstance.getPlainGraph();
-        List<Integer> vertices = plainGraph.getVertices();
+        List<Integer> vertices = plainGraph.getNodes().collect(Collectors.toList());
 
         // This is to constraint that at most K vertices are chosen
         SentenceInCNF resultCNF = SentenceInCNF.constructMinimalTrueSentence();

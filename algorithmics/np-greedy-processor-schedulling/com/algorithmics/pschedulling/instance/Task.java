@@ -17,7 +17,5 @@ public class Task {
     public int getProcessingTime() {
         return processingTime;
     }
-    
-
 
 }
