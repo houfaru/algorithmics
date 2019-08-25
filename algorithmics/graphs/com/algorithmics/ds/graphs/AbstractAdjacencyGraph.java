@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.algorithmics.ds.graphs.algorithms.BFSGraphIterator;
 
@@ -34,7 +35,7 @@ public abstract class AbstractAdjacencyGraph implements Graph {
     }
 
     @Override
-    public boolean containsEdge(int v, int w) {
+    public boolean hasEdge(int v, int w) {
         final HashSet<Integer> neighbors = adjacencyList.get(v);
         return null != neighbors && neighbors.contains(w);
     }
@@ -54,6 +55,14 @@ public abstract class AbstractAdjacencyGraph implements Graph {
         return new HashMap<Integer, HashSet<Integer>>(adjacencyList);
     }
 
+    @Override
+    public Stream<Integer> getNodes() {
+        return adjacencyList.keySet().stream();
+    }
 
+    public Stream<Edge> getEdges() {
+        return adjacencyList.entrySet().stream()
+                .flatMap(e -> e.getValue().stream().map(v -> new Edge(e.getKey(), v)));
+    }
 
 }

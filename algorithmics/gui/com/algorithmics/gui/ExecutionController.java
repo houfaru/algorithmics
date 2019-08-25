@@ -16,7 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.beans.property.SimpleStringProperty;
-
+import javafx.stage.Stage;
 
 public class ExecutionController {
 
@@ -27,18 +27,14 @@ public class ExecutionController {
     public TextArea inputTextArea;
     @FXML
     public TextArea outputTextArea;
-    static SimpleStringProperty line;
+
     public void initialize() {
         inputTextArea.setText("x AND y");
         inputTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
             input = newValue;
         });
-        line=new SimpleStringProperty("execution line");
-        
 
     }
-
-    
 
     public void execute() throws IOException {
 
@@ -48,8 +44,12 @@ public class ExecutionController {
         if (solution.isPresent()) {
             outputTextArea.appendText("assignment " + String.valueOf(solution.get()));
         }
-        line.set("okay");
-        System.out.println(line.getValue());
+        final FXMLLoader consoleLoader = new FXMLLoader();
+        consoleLoader.setLocation(getClass().getResource("ConsoleLayout.fxml"));
+        Parent root=consoleLoader.load();
+        ConsoleController console = consoleLoader.getController();
+        console.setText("what");
+
     }
 
     public void setProblem(String problem) {

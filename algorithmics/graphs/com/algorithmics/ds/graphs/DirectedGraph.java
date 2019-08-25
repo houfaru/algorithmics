@@ -9,13 +9,16 @@ import java.util.List;
  *
  */
 public class DirectedGraph extends AbstractAdjacencyGraph {
+
     @Override
-    public void addEdge(int v, int w) {
-        if (v == w) {
-            throw new RuntimeException("Loop is not allowed : (" + v + "," + w + ")");
+    public boolean addEdge(int v, int w) {
+        if (v != w && !hasEdge(v, w)) {
+            adjacencyList.putIfAbsent(v, new HashSet<Integer>());
+            adjacencyList.get(v).add(w);
+            return true;
+        } else {
+            return false;
         }
-        adjacencyList.putIfAbsent(v, new HashSet<Integer>());
-        adjacencyList.get(v).add(w);
     }
 
     public List<Integer> getVertices() {

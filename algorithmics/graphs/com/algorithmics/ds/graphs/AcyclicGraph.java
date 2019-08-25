@@ -7,11 +7,16 @@ package com.algorithmics.ds.graphs;
  */
 public class AcyclicGraph extends DirectedGraph {
     @Override
-    public void addEdge(int v, int w) {
-        if (canReach(w, v)) {
-            throw new RuntimeException("Partial Order cannot have cycle");
+    public boolean addEdge(int v, int w) {
+        if (!hasEdge(v, w) && !canReach(w, v)) {
+            super.addVertex(v);
+            super.addVertex(w);
+            super.addEdge(v, w);
+            return true;
+        } else {
+            return false;
         }
-        super.addEdge(v, w);
+
     }
 
 }

@@ -7,8 +7,14 @@ package com.algorithmics.ds.graphs;
  */
 public class UndirectedGraph extends DirectedGraph {
     @Override
-    public void addEdge(int v, int w) {
-        super.addEdge(v, w);
-        super.addEdge(w, v);
+    public boolean addEdge(int v, int w) {
+        if (!hasEdge(v, w)) {
+            super.addEdge(v, w);
+            super.addEdge(w, v);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

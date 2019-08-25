@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 
 @SuppressWarnings("deprecation")
 public class MainController extends Application {
-    
+
     Stage primaryStage;
-    
+
     @FXML
     ConsoleController consoleController;
-    
+
     @FXML
     ExecutionController executionController;
 
@@ -32,22 +32,25 @@ public class MainController extends Application {
     public void start(Stage primaryStage) throws Exception {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("MainLayout.fxml"));
         final Parent root = loader.load();
-        
+
         primaryStage.setTitle("Algorithmics");
 
         primaryStage.setScene(new Scene(root, 600, 500));
         primaryStage.show();
         primaryStage.setMaximized(true);
         this.primaryStage = primaryStage;
-        
-        final FXMLLoader consoleLoader = new FXMLLoader(getClass().getResource("ConsoleLayout.fxml"));
+
+        final FXMLLoader consoleLoader =
+                new FXMLLoader(getClass().getResource("ConsoleLayout.fxml"));
         consoleLoader.load();
         ConsoleController consoleController = consoleLoader.getController();
-        
-        final FXMLLoader executionLoader = new FXMLLoader(getClass().getResource("ExecutionLayout.fxml"));
+
+        final FXMLLoader executionLoader =
+                new FXMLLoader(getClass().getResource("ExecutionLayout.fxml"));
         executionLoader.load();
         ExecutionController executionController = executionLoader.getController();
-        executionController.line.bindBidirectional(consoleController.log);
+        executionController.outputTextArea.textProperty()
+                .bindBidirectional(consoleController.feedBack.textProperty());
     }
 
     public void setTitle(String title) {

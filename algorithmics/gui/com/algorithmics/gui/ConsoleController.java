@@ -12,12 +12,13 @@ public class ConsoleController {
     @FXML
     TextArea feedBack;
     
-    static SimpleStringProperty log;
     public void initialize() {
-        log=new SimpleStringProperty("...");
-        feedBack.textProperty().bindBidirectional(log);
-        log.setValue("welcome ...");
+        feedBack.textProperty().setValue("okay");
 
+    }
+    
+    public void setText(String text) {
+        feedBack.textProperty().setValue("xxxx");
     }
     
 }

@@ -1,9 +1,11 @@
 package com.algorithmics.ds.graphs;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class CompleteGraph implements Graph {
 
@@ -16,7 +18,7 @@ public class CompleteGraph implements Graph {
     }
 
     @Override
-    public boolean containsEdge(int v, int w) {
+    public boolean hasEdge(int v, int w) {
         if (v < numberOfVertices && w < numberOfVertices) {
             return true;
         } else {
@@ -40,8 +42,19 @@ public class CompleteGraph implements Graph {
     }
 
     @Override
-    public void addEdge(int v, int w) {
+    public boolean addEdge(int v, int w) {
+        return false;
+    }
+
+    @Override
+    public Stream<Integer> getNodes() {
+        return IntStream.range(0, numberOfVertices).boxed();
+    }
+
+    @Override
+    public void addVertex(int v) {
         // nothing to do
+
     }
 
 }

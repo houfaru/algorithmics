@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import com.algorithmics.ds.graphs.AcyclicGraph;
 
-public class GraphUtil {
+public class Graphs {
     static Set<Integer> visitedVertices = new HashSet<>();
 
     private static Stack<Integer> topologicalSort(int v, AcyclicGraph graph, Stack<Integer> stack) {
@@ -22,7 +22,7 @@ public class GraphUtil {
         return stack;
     }
 
-    public static Stack<Integer> topologicalSort(AcyclicGraph graph) {
+    public static List<Integer> topologicalSort(AcyclicGraph graph) {
         final Stack<Integer> stack = new Stack<>();
         visitedVertices = new HashSet<>();
         for (Integer vertex : graph.getVertices()) {
