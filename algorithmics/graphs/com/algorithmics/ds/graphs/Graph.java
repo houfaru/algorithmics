@@ -16,5 +16,7 @@ public interface Graph {
     public boolean addEdge(int v, int w);
 
     public Stream<Integer> getNodes();
+    
+    public Stream<Edge> getEdges();
 
 }

@@ -43,6 +43,30 @@ public class Graphs {
     }
 
     /**
+     * Floyd Warshall Algorithm to compute the transitiveClosure of a Graph
+     * 
+     * @param graph
+     * @return
+     */
+    public static DirectedGraph transitiveClosure(DirectedGraph graph) {
+        DirectedGraph transitiveClosure = new DirectedGraph();
+        transitiveClosure.copyEdgesFrom(graph);
+        int numOfVertices = transitiveClosure.getNumOfVertices();
+        for (int k = 0; k < numOfVertices; k++) {
+            for (int i = 0; i < numOfVertices; i++) {
+                for (int j = 0; j < numOfVertices; j++) {
+                    if (!transitiveClosure.hasEdge(i, j) && transitiveClosure.hasEdge(i, k)
+                            && transitiveClosure.hasEdge(k, j)) {
+                        transitiveClosure.addEdge(i, j);
+                    }
+                }
+            }
+        }
+        return transitiveClosure;
+    }
+
+
+    /**
      * G(n,p) generation
      * 
      * @param n
@@ -101,6 +125,13 @@ public class Graphs {
             }
         }
         return graph;
+    }
+
+    public boolean[][] toMatrix(Graph g) {
+        int numOfVertices = g.getNumOfVertices();
+        boolean[][] matrix = new boolean[numOfVertices][numOfVertices];
+        g.getEdges().forEach(e -> matrix[e.getFrom()][e.getTo()] = true);
+        return matrix;
     }
 
     @Test

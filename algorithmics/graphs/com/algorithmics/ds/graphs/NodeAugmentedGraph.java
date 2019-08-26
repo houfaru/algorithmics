@@ -52,6 +52,11 @@ public abstract class NodeAugmentedGraph<G extends Graph, L> implements Graph {
         decoratedGraph.addVertex(v);
     }
 
+    @Override
+    public Stream<Edge> getEdges() {
+        return decoratedGraph.getEdges();
+    }
+
     public Graph getGraph() {
         return decoratedGraph;
     }

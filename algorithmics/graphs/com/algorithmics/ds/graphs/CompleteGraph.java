@@ -56,4 +56,10 @@ public class CompleteGraph implements Graph {
 
     }
 
+    @Override
+    public Stream<Edge> getEdges() {
+        return IntStream.range(0, numberOfVertices).boxed().flatMap(i -> IntStream
+                .range(0, numberOfVertices).boxed().filter(j -> i != j).map(j -> new Edge(i, j)));
+    }
+
 }

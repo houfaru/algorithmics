@@ -26,6 +26,10 @@ public abstract class AbstractAdjacencyGraph implements Graph {
         return false;
     }
 
+    public void copyEdgesFrom(Graph g) {
+        g.getEdges().forEach(e -> addEdge(e.getFrom(), e.getTo()));
+    }
+
     public boolean containsVertex(int i) {
         return adjacencyList.keySet().contains(i);
     }
@@ -60,6 +64,7 @@ public abstract class AbstractAdjacencyGraph implements Graph {
         return adjacencyList.keySet().stream();
     }
 
+    @Override
     public Stream<Edge> getEdges() {
         return adjacencyList.entrySet().stream()
                 .flatMap(e -> e.getValue().stream().map(v -> new Edge(e.getKey(), v)));

@@ -79,4 +79,9 @@ public class WeightedGraph<T extends Graph> implements Graph {
         return weights.toString();
     }
 
+    @Override
+    public Stream<Edge> getEdges() {
+        return graph.getEdges();
+    }
+
 }
