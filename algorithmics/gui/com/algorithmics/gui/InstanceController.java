@@ -21,6 +21,7 @@ public class InstanceController {
     ListView<String> problemList;
     @FXML
     ListView<String> solverList;
+    private MainController mainController;
 
     public void initialize() throws IOException {
 
@@ -37,35 +38,41 @@ public class InstanceController {
 
         final Parent root = loader.load();
         ExecutionController executionController = loader.getController();
-        problemList.getSelectionModel().selectedItemProperty()
-                .addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable,
-                            String oldValue, String newValue) {
-                        executionController.setProblem(newValue);
-                    }
-                });
-
-        solverList.getSelectionModel().selectedItemProperty()
-                .addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable,
-                            String oldValue, String newValue) {
-                        executionController.setSolver(newValue);
-                    }
-                });
+//        problemList.getSelectionModel().selectedItemProperty()
+//                .addListener(new ChangeListener<String>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends String> observable,
+//                            String oldValue, String newValue) {
+//                        executionController.setProblem(newValue);
+//                    }
+//                });
+//
+//        solverList.getSelectionModel().selectedItemProperty()
+//                .addListener(new ChangeListener<String>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends String> observable,
+//                            String oldValue, String newValue) {
+//                        executionController.setSolver(newValue);
+//                    }
+//                });
 
     }
 
+    public void init(MainController mainController) {
+        this.mainController=mainController;
+    }
+    
     @FXML
     public void problemSelected() {
-        System.out.println("selecting " + problemList.getSelectionModel().getSelectedItem());
+        mainController.setProblem(problemList.getSelectionModel().getSelectedItem());
+        mainController.appendLog("selecting " + problemList.getSelectionModel().getSelectedItem());
 
     }
 
     @FXML
     public void solverSelected() {
-        System.out.println("selecting " + solverList.getSelectionModel().getSelectedItem());
+        mainController.setSolver(solverList.getSelectionModel().getSelectedItem());
+        mainController.appendLog("selecting " + solverList.getSelectionModel().getSelectedItem());
     }
 
 }

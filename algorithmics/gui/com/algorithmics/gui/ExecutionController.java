@@ -3,13 +3,14 @@ package com.algorithmics.gui;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.algorithmics.invocation.InvocationHandler;
+import com.algorithmics.invocation.SolverLocator;
 import com.algorithmics.invocation.SolverLocator;
 import com.algorithmics.minisat.MiniSatSystemCallSATSolver;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
 import com.algorithmics.np.core.Certificate;
 import com.algorithmics.np.core.Solver;
+import com.algorithmics.servicesupport.ExecutionException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -47,15 +48,21 @@ public class ExecutionController {
     }
 
     public void execute() throws IOException {
-        
-        Solver solver = InvocationHandler.handle(this.solver, null);
-        
-        Optional<Certificate> solution = solver.solveForDefaultFormat(input);
-        outputTextArea.setText(String.valueOf(solution.isPresent()) + "\n");
-        if (solution.isPresent()) {
-            outputTextArea.appendText("assignment " + String.valueOf(solution.get()));
+
+
+
+        try {
+            Solver solver = SolverLocator.locate(this.solver);
+            Optional<Certificate> solution = solver.solveForDefaultFormat(input);
+            outputTextArea.setText(String.valueOf(solution.isPresent()) + "\n");
+            if (solution.isPresent()) {
+                outputTextArea.appendText("assignment " + String.valueOf(solution.get()));
+            }
+            mainController.appendInfo("execution finished...");
+        } catch (ExecutionException e) {
+            mainController.appendException(e);
         }
-        mainController.appendLog("execution finished");
+
     }
 
     public void setProblem(String problem) {
@@ -63,7 +70,6 @@ public class ExecutionController {
     }
 
     public void setSolver(String solver) {
-        System.out.println("selecting solver " + solver);
         this.solver = solver;
     }
 

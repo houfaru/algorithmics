@@ -20,6 +20,7 @@ import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.DimacsReader;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
+import com.algorithmics.servicesupport.ExecutionException;
 
 public class SATSolverTest {
 
@@ -169,8 +170,15 @@ public class SATSolverTest {
                 String satSentenceFilePath = p.toString();
                 DimacsReader dr = new DimacsReader();
                 SentenceInCNF sentence = dr.readFromFile(satSentenceFilePath);
-                Optional<VariableAssignment> solution = solver.solve(sentence.toDimacsFile());
-                assertFalse(solution.isPresent());
+                Optional<VariableAssignment> solution;
+                try {
+                    solution = solver.solve(sentence.toDimacsFile());
+                    assertFalse(solution.isPresent());
+                } catch (ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
             });
 
         } catch (IOException e) {

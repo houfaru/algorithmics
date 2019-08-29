@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,7 +8,15 @@
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.algorithmics.gui.ConsoleController">
    <children>
-       <TextArea fx:id="feedBack" focusTraversable="false" layoutX="203.0" layoutY="32.0" prefHeight="170.0" prefWidth="308.0" wrapText="true" />
+      <ScrollPane prefHeight="200.0" prefWidth="367.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="356.0">
+               <children>
+                  <TextFlow fx:id="feedBack" prefHeight="200.0" prefWidth="378.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
     
 </VBox>

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.algorithmics.ds.graphs.AcyclicGraph;
 import com.algorithmics.ds.graphs.algorithms.Graphs;
+import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.Solver;
 
 /**
@@ -13,6 +14,7 @@ import com.algorithmics.np.core.Solver;
  * Precedence constrained Tasks Schedulling.
  *
  */
+@SolverMapping(name = "P_SCHEDULLING_GREEDY_SOLVER")
 public class PSchedullingGreedySolver implements Solver<PSchedullingInstance, TaskAssignment> {
 
     @Override

@@ -30,7 +30,7 @@
    <left>
       <VBox prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <fx:include source="InstanceLayout.fxml" />
+            <fx:include fx:id="instance" source="InstanceLayout.fxml" />
          </children>
       </VBox>
    </left>
@@ -48,6 +48,11 @@
    <center>
    <TabPane fx:id="tabPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://www.w3.org/2001/XInclude">
       <tabs>
+            <Tab text="File Execution">
+              <content>
+                <fx:include fx:id="fileExecution" source="FileExecutionLayout.fxml" />
+              </content>
+            </Tab>
          <Tab fx:id="tab1" closable="false" text="Execution">
      		<content>
        		<fx:include fx:id="execution" source="ExecutionLayout.fxml" />

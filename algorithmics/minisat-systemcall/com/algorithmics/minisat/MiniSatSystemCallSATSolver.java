@@ -16,17 +16,18 @@ import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.core.Solver;
+import com.algorithmics.servicesupport.ExecutionException;
 
 /**
  * This class depends on minisat {@link http://minisat.se/}<br>
  *
  */
-@SolverMapping(name="SAT_SOLVER_MINISAT")
+@SolverMapping(name = "SAT_SOLVER_MINISAT")
 public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, VariableAssignment> {
     private String outputFilePath = "out.txt";
 
     @Override
-    public Optional<VariableAssignment> solve(SentenceInCNF sentence) {
+    public Optional<VariableAssignment> solve(SentenceInCNF sentence) throws ExecutionException {
         String dimacsFile = sentence.toDimacsFile();
         try {
             Process process =
@@ -41,13 +42,13 @@ public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, Variabl
             }
             return interpretOutput();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ExecutionException(e);
         }
 
     }
 
 
-    public Optional<VariableAssignment> solve(String dimacsFile) {
+    public Optional<VariableAssignment> solve(String dimacsFile) throws ExecutionException {
 
         try {
             Process process =
@@ -66,7 +67,7 @@ public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, Variabl
             }
             return interpretOutput();
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new ExecutionException(e);
         }
 
     }
