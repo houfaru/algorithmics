@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.algorithmics.gui.ConsoleController">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.algorithmics.gui.ConsoleController">
    <children>
        <TextArea fx:id="feedBack" focusTraversable="false" layoutX="203.0" layoutY="32.0" prefHeight="170.0" prefWidth="308.0" wrapText="true" />
    </children>

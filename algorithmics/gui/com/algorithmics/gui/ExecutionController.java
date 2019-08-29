@@ -28,6 +28,10 @@ public class ExecutionController {
     @FXML
     public TextArea outputTextArea;
 
+    private MainController mainController;
+    public void init(MainController mainController) {
+        this.mainController=mainController;
+    }
     public void initialize() {
         inputTextArea.setText("x AND y");
         inputTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -44,12 +48,7 @@ public class ExecutionController {
         if (solution.isPresent()) {
             outputTextArea.appendText("assignment " + String.valueOf(solution.get()));
         }
-        final FXMLLoader consoleLoader = new FXMLLoader();
-        consoleLoader.setLocation(getClass().getResource("ConsoleLayout.fxml"));
-        Parent root=consoleLoader.load();
-        ConsoleController console = consoleLoader.getController();
-        console.setText("what");
-
+        mainController.appendLog("execution finished");
     }
 
     public void setProblem(String problem) {

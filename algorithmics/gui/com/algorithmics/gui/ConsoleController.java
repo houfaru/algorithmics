@@ -1,4 +1,5 @@
 package com.algorithmics.gui;
+
 import java.io.IOException;
 
 import javafx.beans.value.ChangeListener;
@@ -8,17 +9,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.beans.property.SimpleStringProperty;
+
 public class ConsoleController {
     @FXML
     TextArea feedBack;
-    
-    public void initialize() {
-        feedBack.textProperty().setValue("okay");
 
+    MainController mainController;
+
+    public void initialize() {
+        feedBack.textProperty().setValue("Welcome\n");
     }
-    
-    public void setText(String text) {
-        feedBack.textProperty().setValue("xxxx");
+
+    public void init(MainController mainController) {
+        this.mainController = mainController;
     }
-    
+
 }
