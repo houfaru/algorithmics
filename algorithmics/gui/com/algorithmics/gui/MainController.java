@@ -32,8 +32,6 @@ public class MainController extends Application {
     FileExecutionController fileExecutionController;
     @FXML
     InstanceController instanceController;
-    @FXML
-    TextArea feedBack;
 
     public static void main(String[] args) {
         launch(args);
@@ -73,6 +71,7 @@ public class MainController extends Application {
         exceptionText.setFill(Color.RED);
         children.add(exceptionText);
     };
+
     public void appendInfo(String info) {
         ObservableList<Node> children = consoleController.feedBack.getChildren();
         Text exceptionText = new Text(info + "\n");
