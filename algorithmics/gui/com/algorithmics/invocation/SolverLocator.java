@@ -1,4 +1,4 @@
-package com.algorithmics.gui;
+package com.algorithmics.invocation;
 
 import com.algorithmics.minisat.MiniSatSystemCallSATSolver;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;

@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
@@ -20,6 +21,7 @@ import com.algorithmics.np.core.Solver;
  * This class depends on minisat {@link http://minisat.se/}<br>
  *
  */
+@SolverMapping(name="SAT_SOLVER_MINISAT")
 public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, VariableAssignment> {
     private String outputFilePath = "out.txt";
 

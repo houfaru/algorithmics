@@ -3,11 +3,12 @@ package com.algorithmics.np.knapsack.solver;
 import java.util.List;
 import java.util.Optional;
 
+import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.Solver;
 import com.algorithmics.np.knapsack.instance.KnapsackInstance;
 import com.algorithmics.np.knapsack.instance.Bag;
 import com.algorithmics.np.knapsack.instance.Item;
-
+@SolverMapping( name= "KNAPSACK_SOLVER_DYNAMIC_PROGRAMMING")
 public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag>{
 
 	@Override

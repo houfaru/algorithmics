@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.Clause;
@@ -13,6 +14,7 @@ import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.core.Solver;
 
+@SolverMapping(name = "SAT_SOLVER_RECURSIVE")
 public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignment> {
     /**
      * Solves a SAT instance as follows:
@@ -66,7 +68,8 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         return Optional.empty();
     }
 
-    public Optional<VariableAssignment> solve(String sentence) {
+    @Override
+    public Optional<VariableAssignment> solveForDefaultFormat(String sentence) {
         final SATParser parser = new SATParser();
         final SentenceTree s = parser.parse(sentence);
         final SentenceInCNF p = s.toCNF();

@@ -6,4 +6,9 @@ public interface Solver<NP_PROBLEM extends NPProblem<CERTIFICATE>, CERTIFICATE e
     public Optional<CERTIFICATE> solve(NP_PROBLEM p);
 
     public boolean verify(NP_PROBLEM p, CERTIFICATE sc);
+    
+    public default Optional<CERTIFICATE> solveForDefaultFormat(String string){
+        return null;
+    };
+    
 }

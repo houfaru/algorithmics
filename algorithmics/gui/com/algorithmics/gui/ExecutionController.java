@@ -3,9 +3,13 @@ package com.algorithmics.gui;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.algorithmics.invocation.InvocationHandler;
+import com.algorithmics.invocation.SolverLocator;
 import com.algorithmics.minisat.MiniSatSystemCallSATSolver;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
+import com.algorithmics.np.core.Certificate;
+import com.algorithmics.np.core.Solver;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -29,9 +33,11 @@ public class ExecutionController {
     public TextArea outputTextArea;
 
     private MainController mainController;
+
     public void init(MainController mainController) {
-        this.mainController=mainController;
+        this.mainController = mainController;
     }
+
     public void initialize() {
         inputTextArea.setText("x AND y");
         inputTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -41,9 +47,10 @@ public class ExecutionController {
     }
 
     public void execute() throws IOException {
-
-        SATSolverRecursive satSolver = SolverLocator.getSolver(SATSolverRecursive.class);
-        Optional<VariableAssignment> solution = satSolver.solve(input);
+        
+        Solver solver = InvocationHandler.handle(this.solver, null);
+        
+        Optional<Certificate> solution = solver.solveForDefaultFormat(input);
         outputTextArea.setText(String.valueOf(solution.isPresent()) + "\n");
         if (solution.isPresent()) {
             outputTextArea.appendText("assignment " + String.valueOf(solution.get()));

@@ -23,158 +23,160 @@ import com.algorithmics.np.SAT.solver.SATSolverRecursive;
 
 public class SATSolverTest {
 
-	@Test
-	public void emptyTrueAndFalseSentence() {
+    @Test
+    public void emptyTrueAndFalseSentence() {
 
-		SATSolverRecursive solver = new SATSolverRecursive();
+        SATSolverRecursive solver = new SATSolverRecursive();
 
-		Optional<VariableAssignment> result1 = solver.solve(SentenceInCNF.constructMinimalTrueSentence());
-		assertTrue(result1.isPresent());
-		Optional<VariableAssignment> result2 = solver.solve(SentenceInCNF.constructMinimalFalseSentence());
-		assertTrue(!result2.isPresent());
+        Optional<VariableAssignment> result1 =
+                solver.solve(SentenceInCNF.constructMinimalTrueSentence());
+        assertTrue(result1.isPresent());
+        Optional<VariableAssignment> result2 =
+                solver.solve(SentenceInCNF.constructMinimalFalseSentence());
+        assertTrue(!result2.isPresent());
 
-	}
+    }
 
-	@Test
-	public void singleVar() {
-		SATSolverRecursive solver = new SATSolverRecursive();
+    @Test
+    public void singleVar() {
+        SATSolverRecursive solver = new SATSolverRecursive();
 
-		Variable v1 = new Variable("X");
+        Variable v1 = new Variable("X");
 
-		Literal l1 = new Literal(v1);
-		ArrayList<Literal> literals1 = new ArrayList<Literal>();
-		literals1.add(l1);
-		Clause c1 = new Clause(literals1);
-		ArrayList<Clause> clauses = new ArrayList<Clause>();
-		clauses.add(c1);
+        Literal l1 = new Literal(v1);
+        ArrayList<Literal> literals1 = new ArrayList<Literal>();
+        literals1.add(l1);
+        Clause c1 = new Clause(literals1);
+        ArrayList<Clause> clauses = new ArrayList<Clause>();
+        clauses.add(c1);
 
-		SentenceInCNF p = new SentenceInCNF(clauses);
-		Optional<VariableAssignment> variableAssignment;
-		try {
-			variableAssignment = solver.solve(p);
-			assertTrue(variableAssignment.isPresent());
+        SentenceInCNF p = new SentenceInCNF(clauses);
+        Optional<VariableAssignment> variableAssignment;
+        try {
+            variableAssignment = solver.solve(p);
+            assertTrue(variableAssignment.isPresent());
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	@Test
-	public void singleVarNegated() {
-		SATSolverRecursive solver = new SATSolverRecursive();
+    @Test
+    public void singleVarNegated() {
+        SATSolverRecursive solver = new SATSolverRecursive();
 
-		Variable v1 = new Variable("X");
-		Literal l1 = new Literal(v1);
-		l1.setNegated(true);
-		ArrayList<Literal> literals1 = new ArrayList<Literal>();
-		literals1.add(l1);
-		Clause c1 = new Clause(literals1);
-		ArrayList<Clause> clauses = new ArrayList<Clause>();
-		clauses.add(c1);
+        Variable v1 = new Variable("X");
+        Literal l1 = new Literal(v1);
+        l1.setNegated(true);
+        ArrayList<Literal> literals1 = new ArrayList<Literal>();
+        literals1.add(l1);
+        Clause c1 = new Clause(literals1);
+        ArrayList<Clause> clauses = new ArrayList<Clause>();
+        clauses.add(c1);
 
-		SentenceInCNF p = new SentenceInCNF(clauses);
-		Optional<VariableAssignment> variableAssignment;
-		variableAssignment = solver.solve(p);
-		assertTrue(variableAssignment.isPresent());
+        SentenceInCNF p = new SentenceInCNF(clauses);
+        Optional<VariableAssignment> variableAssignment;
+        variableAssignment = solver.solve(p);
+        assertTrue(variableAssignment.isPresent());
 
-	}
+    }
 
-	@Test
-	public void singleVarNegatedXAndNotX() {
-		SATSolverRecursive solver = new SATSolverRecursive();
+    @Test
+    public void singleVarNegatedXAndNotX() {
+        SATSolverRecursive solver = new SATSolverRecursive();
 
-		Variable varaiableX = new Variable("X");
-		Literal literal1 = new Literal(varaiableX);
-		literal1.setNegated(true);
+        Variable varaiableX = new Variable("X");
+        Literal literal1 = new Literal(varaiableX);
+        literal1.setNegated(true);
 
-		Literal literal2 = new Literal(varaiableX);
-		literal2.setNegated(false);
+        Literal literal2 = new Literal(varaiableX);
+        literal2.setNegated(false);
 
-		ArrayList<Literal> literals1 = new ArrayList<Literal>();
-		literals1.add(literal1);
+        ArrayList<Literal> literals1 = new ArrayList<Literal>();
+        literals1.add(literal1);
 
-		ArrayList<Literal> literals2 = new ArrayList<Literal>();
-		literals2.add(literal2);
+        ArrayList<Literal> literals2 = new ArrayList<Literal>();
+        literals2.add(literal2);
 
-		Clause clause1 = new Clause(literals1);
-		Clause clause2 = new Clause(literals2);
-		ArrayList<Clause> clauses = new ArrayList<Clause>();
-		clauses.add(clause1);
-		clauses.add(clause2);
+        Clause clause1 = new Clause(literals1);
+        Clause clause2 = new Clause(literals2);
+        ArrayList<Clause> clauses = new ArrayList<Clause>();
+        clauses.add(clause1);
+        clauses.add(clause2);
 
-		SentenceInCNF p = new SentenceInCNF(clauses);
-		Optional<VariableAssignment> variableAssignment;
+        SentenceInCNF p = new SentenceInCNF(clauses);
+        Optional<VariableAssignment> variableAssignment;
 
-		variableAssignment = solver.solve(p);
-		assertTrue(!variableAssignment.isPresent());
-	}
+        variableAssignment = solver.solve(p);
+        assertTrue(!variableAssignment.isPresent());
+    }
 
-	@Test
-	public void stringtest() {
+    @Test
+    public void stringtest() {
 
-		SATSolverRecursive solver = new SATSolverRecursive();
-		String satSentence = "(x OR NOT y OR z)AND(NOT x)AND(NOT w OR NOT x OR y OR z) ";
+        SATSolverRecursive solver = new SATSolverRecursive();
+        String satSentence = "(x OR NOT y OR z)AND(NOT x)AND(NOT w OR NOT x OR y OR z) ";
 
-		Optional<VariableAssignment> solution = solver.solve(satSentence);
+        Optional<VariableAssignment> solution = solver.solveForDefaultFormat(satSentence);
 
-		assertTrue(solution.isPresent());
-	}
+        assertTrue(solution.isPresent());
+    }
 
-	@Test
-	public void testWithNumber() {
+    @Test
+    public void testWithNumber() {
 
-		SATSolverRecursive solver = new SATSolverRecursive();
-		String satSentence = "(0 + 1 + 2) & (-1 + -3)";
+        SATSolverRecursive solver = new SATSolverRecursive();
+        String satSentence = "(0 + 1 + 2) & (-1 + -3)";
 
-		Optional<VariableAssignment> solution = solver.solve(satSentence);
-		assertTrue(solution.isPresent());
-	}
+        Optional<VariableAssignment> solution = solver.solveForDefaultFormat(satSentence);
+        assertTrue(solution.isPresent());
+    }
 
-	@Test
-	public void testAlotOfSatisfiableInstance() {
-		SATSolverRecursive solver = new SATSolverRecursive();
-		try {
-			Files.list(Paths.get("data/uf20-91")).forEach(p -> {
-				String satSentenceFilePath = p.toString();
-				DimacsReader dimacsReader = new DimacsReader();
-				
-				SentenceInCNF sentence = dimacsReader.readFromFile(satSentenceFilePath);
-				Optional<VariableAssignment> solution = solver.solve(sentence);
-				assertTrue(solution.isPresent());
-			});
+    @Test
+    public void testAlotOfSatisfiableInstance() {
+        SATSolverRecursive solver = new SATSolverRecursive();
+        try {
+            Files.list(Paths.get("data/uf20-91")).forEach(p -> {
+                String satSentenceFilePath = p.toString();
+                DimacsReader dimacsReader = new DimacsReader();
 
-		} catch (IOException e) {
-			fail(e.getMessage());
-		}
-	}
+                SentenceInCNF sentence = dimacsReader.readFromFile(satSentenceFilePath);
+                Optional<VariableAssignment> solution = solver.solve(sentence);
+                assertTrue(solution.isPresent());
+            });
 
-	@Test
-	public void testRemovePureLiterals() {
-		String sat = "(A OR B) AND  (NOT B)";
-		SATParser parser = new SATParser();
-		SentenceTree sentence = parser.parse(sat);
-		SentenceInCNF cnf = sentence.toCNF();
-		cnf.removePureLiterals();
-	}
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+    }
 
-	@Test
-	public void testAlotOfUnsatisfiableInstance() {
+    @Test
+    public void testRemovePureLiterals() {
+        String sat = "(A OR B) AND  (NOT B)";
+        SATParser parser = new SATParser();
+        SentenceTree sentence = parser.parse(sat);
+        SentenceInCNF cnf = sentence.toCNF();
+        cnf.removePureLiterals();
+    }
 
-		MiniSatSystemCallSATSolver solver = new MiniSatSystemCallSATSolver();
-		try {
-			Files.list(Paths.get("data/uuf50-218")).forEach(p -> {
-				String satSentenceFilePath = p.toString();
-				DimacsReader dr = new DimacsReader();
-				SentenceInCNF sentence = dr.readFromFile(satSentenceFilePath);
-				Optional<VariableAssignment> solution = solver.solve(sentence.toDimacsFile());
-				assertFalse(solution.isPresent());
-			});
+    @Test
+    public void testAlotOfUnsatisfiableInstance() {
 
-		} catch (IOException e) {
-			fail(e.getMessage());
-		}
+        MiniSatSystemCallSATSolver solver = new MiniSatSystemCallSATSolver();
+        try {
+            Files.list(Paths.get("data/uuf50-218")).forEach(p -> {
+                String satSentenceFilePath = p.toString();
+                DimacsReader dr = new DimacsReader();
+                SentenceInCNF sentence = dr.readFromFile(satSentenceFilePath);
+                Optional<VariableAssignment> solution = solver.solve(sentence.toDimacsFile());
+                assertFalse(solution.isPresent());
+            });
 
-	}
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+
+    }
 
 }
