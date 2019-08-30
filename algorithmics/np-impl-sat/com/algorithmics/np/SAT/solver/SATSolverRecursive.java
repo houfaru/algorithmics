@@ -1,8 +1,11 @@
 package com.algorithmics.np.SAT.solver;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.SAT.instance.Variable;
@@ -14,7 +17,7 @@ import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.core.Solver;
 
-@SolverMapping(name = "SAT_SOLVER_RECURSIVE")
+@SolverMapping(name = "SAT_SOLVER_RECURSIVE", fileExtension = "cnf")
 public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignment> {
     /**
      * Solves a SAT instance as follows:
@@ -25,8 +28,8 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
      */
     @Override
     public Optional<VariableAssignment> solve(SentenceInCNF sentence) {
-
-        SentenceInCNF newSentence = sentence.removePureLiterals();
+        SentenceInCNF newSentence = new SentenceInCNF(sentence.getClauses());
+        VariableAssignment pureLiteralAssignment = removePureLiterals(sentence);
 
         final List<Clause> unitClauses = newSentence.getUnitClauses();
         final VariableAssignment unitVA = new VariableAssignment();
@@ -38,7 +41,9 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         }
 
         if (newSentence.getClauses().size() == 0) {
-            return Optional.of(VariableAssignment.constructEmptyAssignment());
+            return null == pureLiteralAssignment
+                    ? Optional.of(VariableAssignment.constructEmptyAssignment())
+                    : Optional.of(pureLiteralAssignment);
         }
         if (newSentence.containsEmptyClause()) {
             return Optional.empty();
@@ -53,6 +58,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         if (firstSentenceSolution.isPresent()) {
             firstSentenceSolution.get().assign(oneOfTheVariable, true);
             firstSentenceSolution.get().assignAll(unitVA);
+            firstSentenceSolution.get().assignAll(pureLiteralAssignment);
             return firstSentenceSolution;
         }
 
@@ -62,6 +68,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         if (secondSentenceSolution.isPresent()) {
             secondSentenceSolution.get().assign(oneOfTheVariable, false);
             secondSentenceSolution.get().assignAll(unitVA);
+            firstSentenceSolution.get().assignAll(pureLiteralAssignment);
             return secondSentenceSolution;
         }
 
@@ -74,6 +81,43 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         final SentenceTree s = parser.parse(sentence);
         final SentenceInCNF p = s.toCNF();
         return solve(p);
+    }
+
+    public VariableAssignment removePureLiterals(SentenceInCNF sentence) {
+        VariableAssignment va = new VariableAssignment();
+
+        List<Clause> newClauses = new ArrayList<Clause>(sentence.getClauses());
+        List<Literal> literals = newClauses.stream().flatMap(c -> c.getLiterals().stream())
+                .distinct().collect(Collectors.toList());
+        Set<Literal> negatedLiterals =
+                literals.stream().filter(l -> l.isNegated()).collect(Collectors.toSet());
+        Set<Literal> nonNegatedLiterals =
+                literals.stream().filter(l -> !l.isNegated()).collect(Collectors.toSet());
+        List<Literal> pureLiterals = literals.stream()
+                .filter(l -> !negatedLiterals.contains(l) || !nonNegatedLiterals.contains(l))
+                .collect(Collectors.toList());
+        negatedLiterals.retainAll(pureLiterals);
+        nonNegatedLiterals.retainAll(pureLiterals);
+        for (Literal literal : negatedLiterals) {
+            va.assign(literal.getVariable(), Boolean.FALSE);
+            for (Clause clause : newClauses) {
+                if (clause.getLiterals().contains(literal)) {
+                    sentence.removeClause(clause);
+                }
+            }
+        }
+        for (Literal literal : nonNegatedLiterals) {
+            va.assign(literal.getVariable(), Boolean.TRUE);
+            for (Clause clause : newClauses) {
+                if (clause.getLiterals().contains(literal)) {
+                    sentence.removeClause(clause);
+                }
+            }
+        }
+        if (va.size() == 0) {
+            return null;
+        }
+        return va;
     }
 
     @Override

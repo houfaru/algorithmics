@@ -1,0 +1,3 @@
+com.algorithmics.np.knapsack.instance.KnapsackInstance
+com.algorithmics.np.SAT.instance.CNF.SentenceInCNF
+com.algorithmics.np.vc.instance.VertexCoverInstance

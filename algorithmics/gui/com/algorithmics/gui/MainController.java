@@ -77,10 +77,14 @@ public class MainController extends Application {
         Text exceptionText = new Text(info + "\n");
         exceptionText.setFill(Color.BLUE);
         children.add(exceptionText);
+
     };
 
     public void setSolver(String solver) {
         executionController.setSolver(solver);
+    }
+    public String getSolver() {
+        return executionController.solver;
     }
 
     public void setProblem(String problem) {

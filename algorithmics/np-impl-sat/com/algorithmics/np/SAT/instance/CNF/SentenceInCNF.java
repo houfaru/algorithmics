@@ -35,6 +35,12 @@ public class SentenceInCNF extends Sentence {
         this.clauses = clauses;
     }
 
+    public void removeClause(Clause c) {
+        if(clauses.contains(c)) {
+            clauses.remove(c);
+        }
+    }
+    
     /**
      * We define TRUE sentence as a sentence in CNF with no clauses
      * 
@@ -69,41 +75,7 @@ public class SentenceInCNF extends Sentence {
             return Optional.of(true);
         }
         return Optional.empty();
-    }
-
-    public List<Variable> getPureLiteralVars() {
-
-        List<Variable> negatedVars = clauses.stream().flatMap(s -> s.getLiterals().stream())
-                .distinct().filter(l -> l.isNegated())
-                .map(l -> l.getVariables().stream().findAny().get()).distinct()
-                .collect(Collectors.toList());
-
-        List<Variable> nonNegatedVars = clauses.stream().flatMap(s -> s.getLiterals().stream())
-                .distinct().filter(l -> !l.isNegated())
-                .map(l -> l.getVariables().stream().findAny().get()).distinct()
-                .collect(Collectors.toList());
-
-        List<Variable> negatedPureLiteralVariables = negatedVars.stream()
-                .filter(l -> !nonNegatedVars.contains(l)).collect(Collectors.toList());
-
-        List<Variable> nonNegatedPureLiteralVariables = nonNegatedVars.stream()
-                .filter(l -> !negatedVars.contains(l)).collect(Collectors.toList());
-
-        negatedPureLiteralVariables.addAll(nonNegatedPureLiteralVariables);
-
-        return negatedPureLiteralVariables;
-    }
-
-    public SentenceInCNF removePureLiterals() {
-
-        List<Variable> pureLiteralVars = getPureLiteralVars();
-        List<Clause> newClauses = new ArrayList<>(clauses);
-        for (Variable v : pureLiteralVars) {
-            newClauses = newClauses.stream().filter(c -> !c.getVariables().contains(v))
-                    .collect(Collectors.toList());
-        }
-        return new SentenceInCNF(newClauses);
-    }
+    }    
 
     public List<Clause> getUnitClauses() {
         return clauses.stream().filter(c -> c.getLiterals().size() == 1)

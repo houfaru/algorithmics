@@ -28,4 +28,8 @@ public class ConsoleController {
         this.mainController = mainController;
     }
 
+    public void clear() {
+        feedBack.getChildren().clear();
+    }
+    
 }

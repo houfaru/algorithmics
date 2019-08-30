@@ -14,7 +14,7 @@ import com.algorithmics.np.core.Solver;
  * Precedence constrained Tasks Schedulling.
  *
  */
-@SolverMapping(name = "P_SCHEDULLING_GREEDY_SOLVER")
+@SolverMapping(name = "P_SCHEDULLING_GREEDY_SOLVER", fileExtension = "")
 public class PSchedullingGreedySolver implements Solver<PSchedullingInstance, TaskAssignment> {
 
     @Override

@@ -8,7 +8,7 @@ import com.algorithmics.np.core.Solver;
 import com.algorithmics.np.knapsack.instance.KnapsackInstance;
 import com.algorithmics.np.knapsack.instance.Bag;
 import com.algorithmics.np.knapsack.instance.Item;
-@SolverMapping( name= "KNAPSACK_SOLVER_DYNAMIC_PROGRAMMING")
+@SolverMapping( name= "KNAPSACK_SOLVER_DYNAMIC_PROGRAMMING", fileExtension = "")
 public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag>{
 
 	@Override

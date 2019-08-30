@@ -67,5 +67,10 @@ public class DimacsReader implements SpecificFormatReader<SentenceInCNF> {
         return null;
     }
 
+    @Override
+    public String getExtension() {
+        return "cnf";
+    }
+
 
 }

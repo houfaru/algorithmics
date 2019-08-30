@@ -153,12 +153,13 @@ public class SATSolverTest {
     }
 
     @Test
+    @Deprecated // review this test
     public void testRemovePureLiterals() {
         String sat = "(A OR B) AND  (NOT B)";
         SATParser parser = new SATParser();
         SentenceTree sentence = parser.parse(sat);
         SentenceInCNF cnf = sentence.toCNF();
-        cnf.removePureLiterals();
+        
     }
 
     @Test

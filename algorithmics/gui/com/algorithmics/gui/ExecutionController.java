@@ -26,8 +26,9 @@ import javafx.stage.Stage;
 public class ExecutionController {
 
     private String problem;
-    private String solver;
-    private String input = "x AND y";
+    String solver;
+    private String input =
+            "x26 OR x48 OR x1 AND x15 OR -x4 OR x28 OR x1 AND -x24 OR -x50 OR x26 OR x1 AND x34";
     @FXML
     public TextArea inputTextArea;
     @FXML
@@ -40,7 +41,8 @@ public class ExecutionController {
     }
 
     public void initialize() {
-        inputTextArea.setText("x AND y");
+        inputTextArea.setWrapText(true);
+        inputTextArea.setText(input);
         inputTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
             input = newValue;
         });
@@ -50,15 +52,19 @@ public class ExecutionController {
     public void execute() throws IOException {
 
 
-
+        if (null == solver) {
+            mainController.appendException(new ExecutionException("No solver is selected"));
+        }
         try {
             Solver solver = SolverLocator.locate(this.solver);
             Optional<Certificate> solution = solver.solveForDefaultFormat(input);
-            outputTextArea.setText(String.valueOf(solution.isPresent()) + "\n");
+            outputTextArea.setText("result:" + String.valueOf(solution.isPresent()) + "\n");
+            mainController.appendInfo("execution started...");
             if (solution.isPresent()) {
-                outputTextArea.appendText("assignment " + String.valueOf(solution.get()));
+                outputTextArea.appendText("assignment:\n" + String.valueOf(solution.get()));
             }
             mainController.appendInfo("execution finished...");
+            mainController.notify();
         } catch (ExecutionException e) {
             mainController.appendException(e);
         }

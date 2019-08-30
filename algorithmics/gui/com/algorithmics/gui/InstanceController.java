@@ -3,7 +3,12 @@ package com.algorithmics.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import com.algorithmics.invocation.SolverLocator;
+import com.algorithmics.np.core.NPProblem;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,41 +32,18 @@ public class InstanceController {
 
         ResourceBundle bundle = ResourceBundle.getBundle("i18");
         Enumeration<String> keys = bundle.getKeys();
-        while(keys.hasMoreElements()) {
+        while (keys.hasMoreElements()) {
             solverList.getItems().add(keys.nextElement());
         }
-        problemList.getItems().add("SAT");
-        problemList.getItems().add("VertexCover");
-        problemList.getItems().add("Knapsack");
+        solverList.getSelectionModel().select(1);
 
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("ExecutionLayout.fxml"));
-
-        final Parent root = loader.load();
-        ExecutionController executionController = loader.getController();
-//        problemList.getSelectionModel().selectedItemProperty()
-//                .addListener(new ChangeListener<String>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends String> observable,
-//                            String oldValue, String newValue) {
-//                        executionController.setProblem(newValue);
-//                    }
-//                });
-//
-//        solverList.getSelectionModel().selectedItemProperty()
-//                .addListener(new ChangeListener<String>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends String> observable,
-//                            String oldValue, String newValue) {
-//                        executionController.setSolver(newValue);
-//                    }
-//                });
 
     }
 
     public void init(MainController mainController) {
-        this.mainController=mainController;
+        this.mainController = mainController;
     }
-    
+
     @FXML
     public void problemSelected() {
         mainController.setProblem(problemList.getSelectionModel().getSelectedItem());

@@ -22,7 +22,7 @@ import com.algorithmics.servicesupport.ExecutionException;
  * This class depends on minisat {@link http://minisat.se/}<br>
  *
  */
-@SolverMapping(name = "SAT_SOLVER_MINISAT")
+@SolverMapping(name = "SAT_SOLVER_MINISAT", fileExtension = "cnf")
 public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, VariableAssignment> {
     private String outputFilePath = "out.txt";
 
