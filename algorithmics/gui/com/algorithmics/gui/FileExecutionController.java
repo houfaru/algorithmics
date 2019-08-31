@@ -1,30 +1,28 @@
 package com.algorithmics.gui;
 
 import java.io.File;
+import java.util.Optional;
 import java.util.ServiceLoader;
 
 import com.algorithmics.invocation.SolverLocator;
 import com.algorithmics.invocation.SolverMapping;
+import com.algorithmics.np.core.NPProblem;
 import com.algorithmics.np.core.Solver;
 import com.algorithmics.np.preprocessor.SpecificFormatReader;
 import com.algorithmics.servicesupport.ExecutionException;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 
 public class FileExecutionController {
-
+    @FXML
     public TextArea outputTextArea;
 
     private MainController mainController;
-    private InstanceController instanceController;
 
     public void init(MainController mainController) {
         this.mainController = mainController;
-    }
-
-    public void init(InstanceController instanceController) {
-        this.instanceController = instanceController;
     }
 
     public void initialize() {
@@ -47,8 +45,14 @@ public class FileExecutionController {
                     new FileChooser.ExtensionFilter("*." + extension + " file", "*." + extension);
             fileChooser.getExtensionFilters().add(extFilter);
             File file = fileChooser.showOpenDialog(mainController.primaryStage);
-            System.out.println(file);
+            System.out.println(file.getAbsolutePath());
             SpecificFormatReader reader = locateReader(extension);
+            NPProblem o = (NPProblem) reader.readFromFile(file.getAbsolutePath());
+            Optional solution = solver.solve(o);
+            if (solution.isPresent()) {
+                outputTextArea.appendText(String.valueOf(solution.get()));
+            }
+            mainController.appendInfo("execution finished...");
         } catch (ExecutionException e) {
             mainController.appendException(e);
         }

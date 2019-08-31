@@ -68,7 +68,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         if (secondSentenceSolution.isPresent()) {
             secondSentenceSolution.get().assign(oneOfTheVariable, false);
             secondSentenceSolution.get().assignAll(unitVA);
-            firstSentenceSolution.get().assignAll(pureLiteralAssignment);
+            secondSentenceSolution.get().assignAll(pureLiteralAssignment);
             return secondSentenceSolution;
         }
 
@@ -89,33 +89,31 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         List<Clause> newClauses = new ArrayList<Clause>(sentence.getClauses());
         List<Literal> literals = newClauses.stream().flatMap(c -> c.getLiterals().stream())
                 .distinct().collect(Collectors.toList());
-        Set<Literal> negatedLiterals =
-                literals.stream().filter(l -> l.isNegated()).collect(Collectors.toSet());
-        Set<Literal> nonNegatedLiterals =
-                literals.stream().filter(l -> !l.isNegated()).collect(Collectors.toSet());
-        List<Literal> pureLiterals = literals.stream()
-                .filter(l -> !negatedLiterals.contains(l) || !nonNegatedLiterals.contains(l))
-                .collect(Collectors.toList());
-        negatedLiterals.retainAll(pureLiterals);
-        nonNegatedLiterals.retainAll(pureLiterals);
-        for (Literal literal : negatedLiterals) {
-            va.assign(literal.getVariable(), Boolean.FALSE);
+        Set<Variable> negatedVars = literals.stream().filter(l -> l.isNegated())
+                .map(l -> l.getVariable()).collect(Collectors.toSet());
+        Set<Variable> nonNegatedVars = literals.stream().filter(l -> !l.isNegated())
+                .map(l -> l.getVariable()).collect(Collectors.toSet());
+        List<Variable> pureVarLiterals = literals.stream()
+                .filter(l -> !negatedVars.contains(l.getVariable())
+                        || !nonNegatedVars.contains(l.getVariable()))
+                .map(l -> l.getVariable()).collect(Collectors.toList());
+        negatedVars.retainAll(pureVarLiterals);
+        nonNegatedVars.retainAll(pureVarLiterals);
+        for (Variable var : negatedVars) {
+            va.assign(var, Boolean.FALSE);
             for (Clause clause : newClauses) {
-                if (clause.getLiterals().contains(literal)) {
+                if (clause.getLiterals().contains(Literal.negatedLiteral(var))) {
                     sentence.removeClause(clause);
                 }
             }
         }
-        for (Literal literal : nonNegatedLiterals) {
-            va.assign(literal.getVariable(), Boolean.TRUE);
+        for (Variable var : nonNegatedVars) {
+            va.assign(var, Boolean.TRUE);
             for (Clause clause : newClauses) {
-                if (clause.getLiterals().contains(literal)) {
+                if (clause.getLiterals().contains(Literal.nonNegatedLiteral(var))) {
                     sentence.removeClause(clause);
                 }
             }
-        }
-        if (va.size() == 0) {
-            return null;
         }
         return va;
     }

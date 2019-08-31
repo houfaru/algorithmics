@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 public class ExecutionController {
 
     private String problem;
-    String solver;
+    String solver = "SAT_SOLVER_RECURSIVE";
     private String input =
             "x26 OR x48 OR x1 AND x15 OR -x4 OR x28 OR x1 AND -x24 OR -x50 OR x26 OR x1 AND x34";
     @FXML

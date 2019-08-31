@@ -4,7 +4,6 @@ import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.SatBasedSolver;
 import com.algorithmics.np.vc.instance.VertexCover;
 import com.algorithmics.np.vc.instance.VertexCoverInstance;
-import com.algorithmics.np.vc.preprocessing.TGFGraphReader;
 import com.algorithmics.np.vc.reduction_to_sat.VCToSATReducer;
 @SolverMapping(name = "SAT_BASED_VC_SOLVER", fileExtension = "tgf")
 public class SATBasedVCSolver
