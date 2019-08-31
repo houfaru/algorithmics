@@ -61,10 +61,9 @@ public class ExecutionController {
             outputTextArea.setText("result:" + String.valueOf(solution.isPresent()) + "\n");
             mainController.appendInfo("execution started...");
             if (solution.isPresent()) {
-                outputTextArea.appendText("assignment:\n" + String.valueOf(solution.get()));
+                outputTextArea.appendText(String.valueOf(solution.get()));
             }
             mainController.appendInfo("execution finished...");
-            mainController.notify();
         } catch (ExecutionException e) {
             mainController.appendException(e);
         }
