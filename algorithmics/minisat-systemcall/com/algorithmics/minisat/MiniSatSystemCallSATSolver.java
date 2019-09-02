@@ -105,4 +105,11 @@ public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, Variabl
         return false;
     }
 
+
+    @Override
+    public SentenceInCNF getProblem(String string) throws ExecutionException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

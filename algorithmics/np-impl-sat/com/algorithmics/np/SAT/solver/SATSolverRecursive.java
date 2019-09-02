@@ -16,6 +16,7 @@ import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.core.Solver;
+import com.algorithmics.servicesupport.ExecutionException;
 
 @SolverMapping(name = "SAT_SOLVER_RECURSIVE", fileExtension = "cnf")
 public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignment> {
@@ -76,11 +77,9 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
     }
 
     @Override
-    public Optional<VariableAssignment> solveForDefaultFormat(String sentence) {
-        final SATParser parser = new SATParser();
-        final SentenceTree s = parser.parse(sentence);
-        final SentenceInCNF p = s.toCNF();
-        return solve(p);
+    public Optional<VariableAssignment> solveForDefaultFormat(String sentence)
+            throws ExecutionException {
+        return solve(getProblem(sentence));
     }
 
     public VariableAssignment removePureLiterals(SentenceInCNF sentence) {
@@ -122,6 +121,13 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
     public boolean verify(SentenceInCNF sentence, VariableAssignment variableAssignment) {
         return sentence.verify(variableAssignment);
 
+    }
+
+    @Override
+    public SentenceInCNF getProblem(String string) throws ExecutionException {
+        final SATParser parser = new SATParser();
+        final SentenceTree s = parser.parse(string);
+        return s.toCNF();
     }
 
 }

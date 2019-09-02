@@ -4,5 +4,5 @@ import com.algorithmics.np.core.Certificate;
 import com.algorithmics.np.core.NPProblem;
 
 public interface NPOProblem<C extends Certificate> extends NPProblem<C> {
-    public double opt();
+    public double opt(C certificate);
 }

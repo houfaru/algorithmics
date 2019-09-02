@@ -33,7 +33,9 @@ public class ExecutionController {
     public TextArea inputTextArea;
     @FXML
     public TextArea outputTextArea;
-
+    @FXML
+    public TextArea prettyFormatInput;
+    
     private MainController mainController;
 
     public void init(MainController mainController) {
@@ -51,19 +53,21 @@ public class ExecutionController {
 
     public void execute() throws IOException {
 
-
         if (null == solver) {
             mainController.appendException(new ExecutionException("No solver is selected"));
         }
         try {
             Solver solver = SolverLocator.locate(this.solver);
             Optional<Certificate> solution = solver.solveForDefaultFormat(input);
+            prettyFormatInput.setText(solver.getProblem(input).toString());
             outputTextArea.setText("result:" + String.valueOf(solution.isPresent()) + "\n");
+            long currentTimeMillis=System.currentTimeMillis();
             mainController.appendInfo("execution started...");
             if (solution.isPresent()) {
                 outputTextArea.appendText(String.valueOf(solution.get()));
             }
-            mainController.appendInfo("execution finished...");
+            mainController.appendInfo("execution finished in "+ (System.currentTimeMillis()-currentTimeMillis)+" ms");
+            mainController.appendInfo("");
         } catch (ExecutionException e) {
             mainController.appendException(e);
         }

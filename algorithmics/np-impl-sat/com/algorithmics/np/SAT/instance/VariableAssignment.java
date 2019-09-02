@@ -31,7 +31,7 @@ public class VariableAssignment extends HashMap<Variable, Boolean> implements Ce
     public String toString() {
         String s = "";
         for (Variable v : keySet()) {
-            s += v.toString() + " " + Symbol.LEFT_ARROW + " " + (get(v) ? "T" : "F") + "\n";
+            s += "(" + v.toString() + " " + Symbol.LEFT_ARROW + " " + (get(v) ? "T" : "F") + ") ";
         }
         return s;
     }

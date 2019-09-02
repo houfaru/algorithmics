@@ -10,10 +10,11 @@ import com.algorithmics.sablecc.lexer.LexerException;
 import com.algorithmics.sablecc.node.Start;
 import com.algorithmics.sablecc.parser.Parser;
 import com.algorithmics.sablecc.parser.ParserException;
+import com.algorithmics.servicesupport.ExecutionException;
 
 public class SATParser{
 	
-	public SentenceTree parse(String sentence) {
+	public SentenceTree parse(String sentence) throws ExecutionException {
 		Lexer l=new Lexer (new PushbackReader(new StringReader(sentence)));
 		Parser p=new Parser(l);
 		try {
@@ -22,13 +23,13 @@ public class SATParser{
 			SentenceTree sentenceTreeResult = (SentenceTree) genericAnalysis.caseStart(startSymbol);
 			return sentenceTreeResult;
 		} catch (ParserException e) {
-			e.printStackTrace();
+		    throw new ExecutionException(e);
 		} catch (LexerException e) {
-			e.printStackTrace();
+		    throw new ExecutionException(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+		    throw new ExecutionException(e);
 		}
 		
-		throw new RuntimeException("Internal Error: Parsing error");
+		
 	}
 }

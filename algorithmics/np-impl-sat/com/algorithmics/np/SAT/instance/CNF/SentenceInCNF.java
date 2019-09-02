@@ -14,8 +14,9 @@ import com.algorithmics.np.SAT.instance.Sentence;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.util.Symbol;
+import com.algorithmics.np.core.ProblemStructure;
 
-public class SentenceInCNF extends Sentence {
+public class SentenceInCNF extends Sentence implements ProblemStructure{
 
     private List<Clause> clauses;
 

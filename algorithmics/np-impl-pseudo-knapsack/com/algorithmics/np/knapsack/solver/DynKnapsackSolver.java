@@ -62,6 +62,11 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag> {
 
     @Override
     public Optional<Bag> solveForDefaultFormat(String string) throws ExecutionException {
+        return solve(getProblem(string));
+    }
+
+    @Override
+    public KnapsackInstance getProblem(String string) throws ExecutionException {
         String[] tokens = string.split("[\\s]+");
         int bagCapacity = Integer.valueOf(tokens[0]);
         List<Item> items = new ArrayList<>();
@@ -70,8 +75,8 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag> {
                     Integer.parseInt(tokens[i + 1]));
             items.add(item);
         }
-        KnapsackInstance instance = new KnapsackInstance(items, bagCapacity);
-        return solve(instance);
+        return new KnapsackInstance(items, bagCapacity);
+
     }
 
 }

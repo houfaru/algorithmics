@@ -14,6 +14,7 @@ import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.CNF.Clause;
 import com.algorithmics.np.SAT.instance.CNF.Literal;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
+import com.algorithmics.np.core.NPHardProblem;
 import com.algorithmics.np.preprocessor.SpecificFormatReader;
 
 public class DimacsReader implements SpecificFormatReader<SentenceInCNF> {
@@ -70,6 +71,11 @@ public class DimacsReader implements SpecificFormatReader<SentenceInCNF> {
     @Override
     public String getExtension() {
         return "cnf";
+    }
+
+    @Override
+    public NPHardProblem<?> getWithParameter(SentenceInCNF instance, double k) {
+        return instance;
     }
 
 

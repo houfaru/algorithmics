@@ -114,7 +114,7 @@ public class SATSolverTest {
     }
 
     @Test
-    public void stringtest() {
+    public void stringtest() throws ExecutionException {
 
         SATSolverRecursive solver = new SATSolverRecursive();
         String satSentence = "(x OR NOT y OR z)AND(NOT x)AND(NOT w OR NOT x OR y OR z) ";
@@ -125,7 +125,7 @@ public class SATSolverTest {
     }
 
     @Test
-    public void testWithNumber() {
+    public void testWithNumber() throws ExecutionException {
 
         SATSolverRecursive solver = new SATSolverRecursive();
         String satSentence = "(0 + 1 + 2) & (-1 + -3)";
@@ -154,7 +154,7 @@ public class SATSolverTest {
 
     @Test
     @Deprecated // review this test
-    public void testRemovePureLiterals() {
+    public void testRemovePureLiterals() throws ExecutionException {
         String sat = "(A OR B) AND  (NOT B)";
         SATParser parser = new SATParser();
         SentenceTree sentence = parser.parse(sat);

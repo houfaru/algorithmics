@@ -8,6 +8,7 @@ import com.algorithmics.ds.graphs.AcyclicGraph;
 import com.algorithmics.ds.graphs.algorithms.Graphs;
 import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.Solver;
+import com.algorithmics.servicesupport.ExecutionException;
 
 /**
  * 
@@ -44,6 +45,12 @@ public class PSchedullingGreedySolver implements Solver<PSchedullingInstance, Ta
     public boolean verify(PSchedullingInstance p, TaskAssignment sc) {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public PSchedullingInstance getProblem(String string) throws ExecutionException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

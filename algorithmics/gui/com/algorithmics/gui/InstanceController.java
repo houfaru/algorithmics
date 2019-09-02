@@ -37,7 +37,6 @@ public class InstanceController {
         }
         solverList.getSelectionModel().select(1);
 
-
     }
 
     public void init(MainController mainController) {

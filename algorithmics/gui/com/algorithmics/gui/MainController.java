@@ -7,6 +7,7 @@ import java.io.IOException;
 import com.algorithmics.servicesupport.ExecutionException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
@@ -62,21 +63,34 @@ public class MainController extends Application {
 
     public void appendLog(String log) {
         ObservableList<Node> children = consoleController.feedBack.getChildren();
-        children.add(new Text(log + "\n"));
+        Platform.runLater(new Runnable() {
+            public void run() {
+                children.add(new Text(log + "\n"));
+            }
+        });
     };
 
     public void appendException(ExecutionException exception) {
         ObservableList<Node> children = consoleController.feedBack.getChildren();
         Text exceptionText = new Text(exception.getLocalizedMessage() + "\n");
         exceptionText.setFill(Color.RED);
-        children.add(exceptionText);
+        Platform.runLater(new Runnable() {
+            public void run() {
+                children.add(exceptionText);
+            }
+        });
+        
     };
 
     public void appendInfo(String info) {
         ObservableList<Node> children = consoleController.feedBack.getChildren();
         Text exceptionText = new Text(info + "\n");
         exceptionText.setFill(Color.BLUE);
-        children.add(exceptionText);
+        Platform.runLater(new Runnable() {
+            public void run() {
+                children.add(exceptionText);
+            }
+        });
 
     };
 

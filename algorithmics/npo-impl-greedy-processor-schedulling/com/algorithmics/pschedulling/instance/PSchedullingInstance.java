@@ -26,7 +26,7 @@ public class PSchedullingInstance implements NPOProblem<TaskAssignment> {
     }
 
     @Override
-    public double opt() {
+    public double opt(TaskAssignment certificate) {
         return graph.getTasks().mapToDouble(t -> t.getProcessingTime() * t.getWeight()).sum();
     }
 

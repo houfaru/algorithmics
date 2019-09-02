@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.algorithmics.ds.graphs.UndirectedGraph;
+import com.algorithmics.np.core.NPHardProblem;
 import com.algorithmics.np.preprocessor.SpecificFormatReader;
+import com.algorithmics.np.vc.instance.VertexCoverInstance;
 
 public class TGFGraphReader implements SpecificFormatReader<UndirectedGraph> {
 
@@ -48,5 +50,9 @@ public class TGFGraphReader implements SpecificFormatReader<UndirectedGraph> {
     @Override
     public String getExtension() {
         return "tgf";
+    }
+    @Override
+    public NPHardProblem<?> getWithParameter(UndirectedGraph instance, double k) {
+        return new VertexCoverInstance(instance, (int)k);
     }
 }
