@@ -15,6 +15,7 @@ import com.algorithmics.np.SAT.instance.CNF.Literal;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
+import com.algorithmics.np.SAT.util.SentenceUtil;
 import com.algorithmics.np.core.Solver;
 import com.algorithmics.servicesupport.ExecutionException;
 
@@ -36,7 +37,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         final VariableAssignment unitVA = new VariableAssignment();
         for (Clause c : unitClauses) {
             final Literal literal = c.getLiterals().stream().findAny().get();
-            newSentence = newSentence.assignOneVariableAndReduce(
+            newSentence = assignOneVariableAndReduce(newSentence,
                     literal.getVariables().stream().findAny().get(), !literal.isNegated());
             unitVA.assign(literal.getVariable(), !literal.isNegated());
         }
@@ -54,7 +55,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         final Variable oneOfTheVariable = variables.stream().findAny().get();
 
         final SentenceInCNF firstReducedSentence =
-                newSentence.assignOneVariableAndReduce(oneOfTheVariable, true);
+                assignOneVariableAndReduce(newSentence, oneOfTheVariable, true);
         final Optional<VariableAssignment> firstSentenceSolution = solve(firstReducedSentence);
         if (firstSentenceSolution.isPresent()) {
             firstSentenceSolution.get().assign(oneOfTheVariable, true);
@@ -64,7 +65,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         }
 
         final SentenceInCNF secondReducedSentence =
-                newSentence.assignOneVariableAndReduce(oneOfTheVariable, false);
+                assignOneVariableAndReduce(newSentence, oneOfTheVariable, false);
         final Optional<VariableAssignment> secondSentenceSolution = solve(secondReducedSentence);
         if (secondSentenceSolution.isPresent()) {
             secondSentenceSolution.get().assign(oneOfTheVariable, false);
@@ -117,6 +118,44 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
         return va;
     }
 
+    public SentenceInCNF assignOneVariableAndReduce(SentenceInCNF cnfSentence, Variable variable,
+            boolean value) {
+        SentenceInCNF scnf = SentenceInCNF.constructMinimalTrueSentence();
+        for (Clause c : cnfSentence.getClauses()) {
+            Clause newClause = c.clone();
+            newClause = assignOneVariableAndReduce(newClause, variable, value);
+            if (!newClause.isTrueClause() && !newClause.isEmptyClause()) {
+                scnf.getClauses().add(newClause);
+            }
+            if (newClause.isEmptyClause()) {
+                return SentenceInCNF.constructMinimalFalseSentence();
+            }
+        }
+        return scnf;
+    }
+    
+    public Clause assignOneVariableAndReduce(Clause c, Variable variable,boolean value) {
+        List<Literal>newLiterals=new ArrayList<Literal>();
+        boolean certificateFound=false;
+        for(Literal l:c.getLiterals()) {
+            Variable vLiteral=l.getVariables().stream().findAny().get();
+            if(vLiteral.equals(variable)) {
+                if(value && !l.isNegated()|| !value && l.isNegated()) {
+                    certificateFound=true;
+                    break;
+                }
+            }else {
+                newLiterals.add(l);
+            }
+        }
+        if(certificateFound) {
+            return Clause.constructTrueClause();
+        }else {
+            return new Clause(newLiterals);
+        }
+    }
+    
+
     @Override
     public boolean verify(SentenceInCNF sentence, VariableAssignment variableAssignment) {
         return sentence.verify(variableAssignment);
@@ -127,7 +166,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
     public SentenceInCNF getProblem(String string) throws ExecutionException {
         final SATParser parser = new SATParser();
         final SentenceTree s = parser.parse(string);
-        return s.toCNF();
+        return SentenceUtil.toCNF(s);
     }
 
 }

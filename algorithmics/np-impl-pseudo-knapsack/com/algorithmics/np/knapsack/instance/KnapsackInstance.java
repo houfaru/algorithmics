@@ -32,4 +32,10 @@ public class KnapsackInstance implements NPHardProblem<Bag> {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    @Override
+    public String toString() {
+        return "Bag capacity: " + bagCapacity + "\nItems :\n"
+                + items.stream().map(Item::toString).reduce((a, b) -> a + "\n" + b).orElse("NA");
+    }
+
 }

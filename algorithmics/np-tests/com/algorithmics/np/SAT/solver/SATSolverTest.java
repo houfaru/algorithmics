@@ -153,16 +153,6 @@ public class SATSolverTest {
     }
 
     @Test
-    @Deprecated // review this test
-    public void testRemovePureLiterals() throws ExecutionException {
-        String sat = "(A OR B) AND  (NOT B)";
-        SATParser parser = new SATParser();
-        SentenceTree sentence = parser.parse(sat);
-        SentenceInCNF cnf = sentence.toCNF();
-        
-    }
-
-    @Test
     public void testAlotOfUnsatisfiableInstance() {
 
         MiniSatSystemCallSATSolver solver = new MiniSatSystemCallSATSolver();
@@ -179,7 +169,7 @@ public class SATSolverTest {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                
+
             });
 
         } catch (IOException e) {

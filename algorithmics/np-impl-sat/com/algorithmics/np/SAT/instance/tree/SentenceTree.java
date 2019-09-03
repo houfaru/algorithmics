@@ -11,9 +11,6 @@ import java.util.StringJoiner;
 import com.algorithmics.np.SAT.instance.Sentence;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
-import com.algorithmics.np.SAT.instance.CNF.Clause;
-import com.algorithmics.np.SAT.instance.CNF.Literal;
-import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.SAT.util.Symbol;
 
 public class SentenceTree extends Sentence {
@@ -32,6 +29,11 @@ public class SentenceTree extends Sentence {
         return leafTree;
     }
 
+    
+    public Optional<BooleanOperationEnum>getOperation(){
+        return operation;
+    }
+    
     public static SentenceTree constructNonLeafTree(BooleanOperationEnum op, SentenceTree firstTree,
             SentenceTree secondTree, SentenceTree... otherTrees) {
         final SentenceTree nonLeafTree = new SentenceTree();
@@ -167,69 +169,9 @@ public class SentenceTree extends Sentence {
         subTrees = Optional.of(newSubTrees);
     }
 
-    public SentenceInCNF toCNF() {
-        propagateNegation();
-        if (isLeaf()) {
-            final List<Literal> literals = new ArrayList<Literal>();
-            final Literal literal = new Literal(this.var.get());
-            literal.setNegated(this.isNegated());
-            literals.add(literal);
-            final Clause c = new Clause(literals);
-            final List<Clause> clauses = new ArrayList<Clause>();
-            clauses.add(c);
-            final SentenceInCNF s = new SentenceInCNF(clauses);
-            return s;
-        }
-        if (this.operation.get().equals(BooleanOperationEnum.OR) && this.getDepth() == 1) {
-            final SentenceInCNF s = SentenceInCNF.constructMinimalTrueSentence();
-            final List<Literal> literals = new ArrayList<Literal>();
+    
 
-            for (SentenceTree subTree : subTrees.get()) {
-                SentenceInCNF subCNF = subTree.toCNF();
-                literals.addAll(subCNF.getClauses().get(0).getLiterals());
-            }
-            final Clause newClause = new Clause(literals);
-            s.getClauses().add(newClause);
-            return s;
-        }
-        if (this.operation.get().equals(BooleanOperationEnum.AND)) {
-            final SentenceInCNF newCNF = SentenceInCNF.constructMinimalTrueSentence();
-            for (SentenceTree subTree : subTrees.get()) {
-                SentenceInCNF subCNF = subTree.toCNF();
-                newCNF.getClauses().addAll(subCNF.getClauses());
-            }
-            return newCNF;
-        }
-        if (this.operation.get().equals(BooleanOperationEnum.OR)) {
-
-            SentenceInCNF newCNF = SentenceInCNF.constructMinimalTrueSentence();
-            for (SentenceTree subTree : subTrees.get()) {
-                SentenceInCNF cnf = subTree.toCNF();
-                newCNF = crossProduct(newCNF, cnf);
-            }
-
-            return newCNF;
-        }
-        throw new RuntimeException("Unreachable code");
-    }
-
-    private SentenceInCNF crossProduct(SentenceInCNF firstTrees, SentenceInCNF secondTrees) {
-        final SentenceInCNF newCNF = SentenceInCNF.constructMinimalTrueSentence();
-        if (firstTrees.isTautology().isPresent() && firstTrees.isTautology().get()) {
-            return secondTrees;
-        }
-        for (Clause c1 : firstTrees.getClauses()) {
-            for (Clause c2 : secondTrees.getClauses()) {
-                List<Literal> literals = new ArrayList<Literal>();
-                literals.addAll(c1.getLiterals());
-                literals.addAll(c2.getLiterals());
-                Clause newClause = new Clause(literals);
-                newCNF.getClauses().add(newClause);
-            }
-        }
-        return newCNF;
-    }
-
+    
     public void propagateNegation() {
         if (isLeaf() || !isNegated()) {
             return;

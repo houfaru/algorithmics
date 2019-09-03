@@ -68,14 +68,20 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag> {
     @Override
     public KnapsackInstance getProblem(String string) throws ExecutionException {
         String[] tokens = string.split("[\\s]+");
-        int bagCapacity = Integer.valueOf(tokens[0]);
-        List<Item> items = new ArrayList<>();
-        for (int i = 1; i < tokens.length - 1; i += 2) {
-            Item item = new Item("item_" + String.valueOf((i + 1) / 2), Integer.parseInt(tokens[i]),
-                    Integer.parseInt(tokens[i + 1]));
-            items.add(item);
+        try {
+            int bagCapacity = Integer.parseInt(tokens[0]);
+            
+            List<Item> items = new ArrayList<>();
+            for (int i = 1; i < tokens.length - 1; i += 2) {
+                Item item = new Item("item_" + String.valueOf((i + 1) / 2), Integer.parseInt(tokens[i]),
+                        Integer.parseInt(tokens[i + 1]));
+                items.add(item);
+            }
+            return new KnapsackInstance(items, bagCapacity);    
+        }catch(NumberFormatException e) {
+            new ExecutionException(e);
         }
-        return new KnapsackInstance(items, bagCapacity);
+        return null;
 
     }
 

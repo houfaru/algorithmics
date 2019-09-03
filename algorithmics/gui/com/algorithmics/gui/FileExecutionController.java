@@ -17,6 +17,10 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 
 public class FileExecutionController {
+
+    @FXML
+    public TextArea inputTextArea;
+
     @FXML
     public TextArea outputTextArea;
 
@@ -28,6 +32,7 @@ public class FileExecutionController {
 
     public void initialize() {
         outputTextArea.setWrapText(true);
+        inputTextArea.setWrapText(true);
     }
 
     public void execute() {
@@ -48,6 +53,7 @@ public class FileExecutionController {
             long currentTimeMillis = System.currentTimeMillis();
             SpecificFormatReader reader = locateReader(extension);
             ProblemStructure instance = reader.readFromFile(file.getAbsolutePath());
+            inputTextArea.setText(instance.toString());
             NPProblem o = reader.getWithParameter(instance, 6);
             Optional solution = solver.solve(o);
             if (solution.isPresent()) {

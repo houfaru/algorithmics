@@ -18,7 +18,7 @@ import com.algorithmics.np.core.ProblemStructure;
 
 public class SentenceInCNF extends Sentence implements ProblemStructure{
 
-    private List<Clause> clauses;
+    private final List<Clause> clauses;
 
     @Override
     public HashSet<Variable> getVariables() {
@@ -83,20 +83,7 @@ public class SentenceInCNF extends Sentence implements ProblemStructure{
                 .collect(Collectors.toList());
     }
 
-    public SentenceInCNF assignOneVariableAndReduce(Variable variable, boolean value) {
-        SentenceInCNF scnf = SentenceInCNF.constructMinimalTrueSentence();
-        for (Clause c : clauses) {
-            Clause newClause = c.clone();
-            newClause.assignOneVariableAndReduce(variable, value);
-            if (!newClause.isTrueClause() && !newClause.isEmptyClause()) {
-                scnf.getClauses().add(newClause);
-            }
-            if (newClause.isEmptyClause()) {
-                return SentenceInCNF.constructMinimalFalseSentence();
-            }
-        }
-        return scnf;
-    }
+    
 
     @Override
     public boolean verify(VariableAssignment certificate) {
