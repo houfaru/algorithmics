@@ -1,5 +1,5 @@
 com.algorithmics.np.knapsack.solver.DynKnapsackSolver
 com.algorithmics.np.SAT.solver.SATSolverRecursive
 com.algorithmics.np.vc.solver.SATBasedVCSolver
-com.algorithmics.pschedulling.instance.PSchedullingGreedySolver
+com.algorithmics.pschedulling.instance.JobSequencingGreedySolver
 com.algorithmics.minisat.MiniSatSystemCallSATSolver
