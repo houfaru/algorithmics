@@ -1,12 +1,12 @@
 package com.algorithmics.servicesupport;
 
-public class ExecutionException extends Exception {
+public class UserExecutionException extends Exception {
 
     private static final long serialVersionUID = 1L;
-    public ExecutionException(Exception source) {
+    public UserExecutionException(Exception source) {
         super(source);
     }
-    public ExecutionException(String string) {
+    public UserExecutionException(String string) {
         super(string);
     }
 

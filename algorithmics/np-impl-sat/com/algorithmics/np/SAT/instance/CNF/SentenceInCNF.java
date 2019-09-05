@@ -15,6 +15,7 @@ import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.util.Symbol;
 import com.algorithmics.np.core.ProblemStructure;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 public class SentenceInCNF extends Sentence implements ProblemStructure{
 
@@ -108,7 +109,7 @@ public class SentenceInCNF extends Sentence implements ProblemStructure{
                 .reduce((a, b) -> a + " " + Symbol.AND + " " + b).get();
     }
 
-    public String toDimacsFile() {
+    public String toDimacsFile() throws UserExecutionException {
         String pathString = "data/tempIn.dimacs";
         Path path = Paths.get(pathString);
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
@@ -131,7 +132,7 @@ public class SentenceInCNF extends Sentence implements ProblemStructure{
             }
             writer.write(newCNFContent);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            throw new UserExecutionException(e);
         }
         return pathString;
     }

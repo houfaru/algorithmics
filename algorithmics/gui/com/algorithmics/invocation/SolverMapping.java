@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 public @interface SolverMapping {
     String name();
 
-    String fileExtension();
+    String[] fileExtensions();
 }

@@ -5,7 +5,7 @@ import java.util.Optional;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 public class SatBasedSolver<NP_CERTIFICATE extends Certificate, NP_PROBLEM extends NPProblem<NP_CERTIFICATE>>
         implements Solver<NP_PROBLEM, NP_CERTIFICATE> {
@@ -31,13 +31,13 @@ public class SatBasedSolver<NP_CERTIFICATE extends Certificate, NP_PROBLEM exten
     }
 
     @Override
-    public boolean verify(NP_PROBLEM p, NP_CERTIFICATE sc) {
+    public boolean verify(NP_PROBLEM p, NP_CERTIFICATE sc) throws UserExecutionException {
         return p.verify(sc);
 
     }
 
     @Override
-    public NP_PROBLEM getProblem(String string) throws ExecutionException {
+    public NP_PROBLEM getProblem(String string) throws UserExecutionException {
         // TODO Auto-generated method stub
         return null;
     };

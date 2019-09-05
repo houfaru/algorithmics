@@ -8,14 +8,14 @@ import com.algorithmics.ds.graphs.AcyclicGraph;
 import com.algorithmics.ds.graphs.algorithms.Graphs;
 import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.Solver;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 /**
  * 
  * Precedence constrained Tasks Schedulling.
  *
  */
-@SolverMapping(name = "P_SCHEDULLING_GREEDY_SOLVER", fileExtension = "")
+@SolverMapping(name = "P_SCHEDULLING_GREEDY_SOLVER", fileExtensions = "")
 public class PSchedullingGreedySolver implements Solver<PSchedullingInstance, TaskAssignment> {
 
     @Override
@@ -48,7 +48,7 @@ public class PSchedullingGreedySolver implements Solver<PSchedullingInstance, Ta
     }
 
     @Override
-    public PSchedullingInstance getProblem(String string) throws ExecutionException {
+    public PSchedullingInstance getProblem(String string) throws UserExecutionException {
         // TODO Auto-generated method stub
         return null;
     }

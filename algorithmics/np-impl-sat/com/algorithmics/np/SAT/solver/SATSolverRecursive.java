@@ -17,9 +17,9 @@ import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.SAT.util.SentenceUtil;
 import com.algorithmics.np.core.Solver;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
-@SolverMapping(name = "SAT_SOLVER_RECURSIVE", fileExtension = "cnf")
+@SolverMapping(name = "SAT_SOLVER_RECURSIVE", fileExtensions = {"cnf"})
 public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignment> {
     /**
      * Solves a SAT instance as follows:
@@ -79,7 +79,7 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
 
     @Override
     public Optional<VariableAssignment> solveForDefaultFormat(String sentence)
-            throws ExecutionException {
+            throws UserExecutionException {
         return solve(getProblem(sentence));
     }
 
@@ -163,9 +163,9 @@ public class SATSolverRecursive implements Solver<SentenceInCNF, VariableAssignm
     }
 
     @Override
-    public SentenceInCNF getProblem(String string) throws ExecutionException {
+    public SentenceInCNF getProblem(String problemString) throws UserExecutionException {
         final SATParser parser = new SATParser();
-        final SentenceTree s = parser.parse(string);
+        final SentenceTree s = parser.parse(problemString);
         return SentenceUtil.toCNF(s);
     }
 

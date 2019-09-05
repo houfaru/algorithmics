@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -70,7 +70,7 @@ public class MainController extends Application {
         });
     };
 
-    public void appendException(ExecutionException exception) {
+    public void appendException(UserExecutionException exception) {
         ObservableList<Node> children = consoleController.feedBack.getChildren();
         Text exceptionText = new Text(exception.getLocalizedMessage() + "\n");
         exceptionText.setFill(Color.RED);
@@ -98,7 +98,7 @@ public class MainController extends Application {
         executionController.setSolver(solver);
     }
     public String getSolver() {
-        return executionController.solver;
+        return executionController.getSolver();
     }
 
     public void setProblem(String problem) {

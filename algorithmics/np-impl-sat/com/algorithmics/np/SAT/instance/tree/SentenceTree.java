@@ -29,11 +29,11 @@ public class SentenceTree extends Sentence {
         return leafTree;
     }
 
-    
-    public Optional<BooleanOperationEnum>getOperation(){
+
+    public Optional<BooleanOperationEnum> getOperation() {
         return operation;
     }
-    
+
     public static SentenceTree constructNonLeafTree(BooleanOperationEnum op, SentenceTree firstTree,
             SentenceTree secondTree, SentenceTree... otherTrees) {
         final SentenceTree nonLeafTree = new SentenceTree();
@@ -50,21 +50,11 @@ public class SentenceTree extends Sentence {
     public HashSet<Variable> getVariables() {
         final HashSet<Variable> variableSet = new HashSet<Variable>();
         if (isLeaf()) {
-            if (!var.isPresent()) {
-                throw new RuntimeException(
-                        "Internal Error, a sentence tree leaf do not contain variable");
-            }
             variableSet.add(var.get());
         } else {
-            if (!subTrees.isPresent()) {
-                throw new RuntimeException("Internal Error, subtrees empty");
-            }
             subTrees.get().forEach(tree -> {
-                try {
-                    variableSet.addAll(tree.getVariables());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                variableSet.addAll(tree.getVariables());
+
             });
         }
         return variableSet;
@@ -102,8 +92,8 @@ public class SentenceTree extends Sentence {
                     }
                 }
                 return res;
-            }
-            if (operation.get() == BooleanOperationEnum.OR) {
+            } else {
+                //OR
                 boolean res = false;
                 for (SentenceTree tree : subTrees.get()) {
                     boolean cur = tree.verify(certificate);
@@ -115,8 +105,7 @@ public class SentenceTree extends Sentence {
                 return res;
             }
         }
-        throw new RuntimeException(
-                "Internal Error: undefined boolean Operation on nonleaf node : " + operation.get());
+
     }
 
     @Override
@@ -128,13 +117,6 @@ public class SentenceTree extends Sentence {
                 return var.get().toString();
             }
         } else {
-            if (!operation.isPresent()) {
-                throw new RuntimeException(
-                        "Internal Error: undefined boolean Operation on nonleaf node");
-            }
-            if (!subTrees.isPresent()) {
-                throw new RuntimeException("Internal Error: subtrees undefined on nonleaf node");
-            }
             final String operatorSymbol =
                     operation.get().toString().equals("AND") ? Symbol.AND + "" : Symbol.OR + "";
             final StringJoiner stringJoiner = new StringJoiner(" " + operatorSymbol + " ");
@@ -169,9 +151,8 @@ public class SentenceTree extends Sentence {
         subTrees = Optional.of(newSubTrees);
     }
 
-    
 
-    
+
     public void propagateNegation() {
         if (isLeaf() || !isNegated()) {
             return;

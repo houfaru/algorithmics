@@ -5,7 +5,7 @@ import com.algorithmics.np.core.SatBasedSolver;
 import com.algorithmics.np.vc.instance.VertexCover;
 import com.algorithmics.np.vc.instance.VertexCoverInstance;
 import com.algorithmics.np.vc.reduction_to_sat.VCToSATReducer;
-@SolverMapping(name = "SAT_BASED_VC_SOLVER", fileExtension = "tgf")
+@SolverMapping(name = "SAT_BASED_VC_SOLVER", fileExtensions = {"tgf"})
 public class SATBasedVCSolver
         extends SatBasedSolver<VertexCover, VertexCoverInstance> {
 

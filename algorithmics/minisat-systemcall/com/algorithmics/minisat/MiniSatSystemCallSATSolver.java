@@ -15,19 +15,22 @@ import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.SAT.instance.Variable;
 import com.algorithmics.np.SAT.instance.VariableAssignment;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
+import com.algorithmics.np.SAT.instance.tree.SentenceTree;
+import com.algorithmics.np.SAT.preprocessor.SATParser;
+import com.algorithmics.np.SAT.util.SentenceUtil;
 import com.algorithmics.np.core.Solver;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 /**
  * This class depends on minisat {@link http://minisat.se/}<br>
  *
  */
-@SolverMapping(name = "SAT_SOLVER_MINISAT", fileExtension = "cnf")
+@SolverMapping(name = "SAT_SOLVER_MINISAT", fileExtensions = "cnf")
 public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, VariableAssignment> {
     private String outputFilePath = "out.txt";
 
     @Override
-    public Optional<VariableAssignment> solve(SentenceInCNF sentence) throws ExecutionException {
+    public Optional<VariableAssignment> solve(SentenceInCNF sentence) throws UserExecutionException {
         String dimacsFile = sentence.toDimacsFile();
         try {
             Process process =
@@ -42,13 +45,13 @@ public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, Variabl
             }
             return interpretOutput();
         } catch (IOException e) {
-            throw new ExecutionException(e);
+            throw new UserExecutionException(e);
         }
 
     }
 
 
-    public Optional<VariableAssignment> solve(String dimacsFile) throws ExecutionException {
+    public Optional<VariableAssignment> solve(String dimacsFile) throws UserExecutionException {
 
         try {
             Process process =
@@ -67,7 +70,7 @@ public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, Variabl
             }
             return interpretOutput();
         } catch (IOException e) {
-            throw new ExecutionException(e);
+            throw new UserExecutionException(e);
         }
 
     }
@@ -107,9 +110,10 @@ public class MiniSatSystemCallSATSolver implements Solver<SentenceInCNF, Variabl
 
 
     @Override
-    public SentenceInCNF getProblem(String string) throws ExecutionException {
-        // TODO Auto-generated method stub
-        return null;
+    public SentenceInCNF getProblem(String problemString) throws UserExecutionException {
+        final SATParser parser = new SATParser();
+        final SentenceTree s = parser.parse(problemString);
+        return SentenceUtil.toCNF(s);
     }
 
 }

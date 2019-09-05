@@ -16,11 +16,12 @@ import com.algorithmics.np.SAT.instance.CNF.Literal;
 import com.algorithmics.np.SAT.instance.CNF.SentenceInCNF;
 import com.algorithmics.np.core.NPHardProblem;
 import com.algorithmics.np.preprocessor.SpecificFormatReader;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 public class DimacsReader implements SpecificFormatReader<SentenceInCNF> {
 
     @Override
-    public SentenceInCNF readFromFile(String filePath) {
+    public SentenceInCNF readFromFile(String filePath) throws UserExecutionException {
         try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
             // warning !!!, we assume that the dimacs file is in correct format.
             // correct format => correct parsing
@@ -63,9 +64,8 @@ public class DimacsReader implements SpecificFormatReader<SentenceInCNF> {
             SentenceInCNF newSentence = new SentenceInCNF(clauses);
             return newSentence;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new UserExecutionException(e);
         }
-        return null;
     }
 
     @Override

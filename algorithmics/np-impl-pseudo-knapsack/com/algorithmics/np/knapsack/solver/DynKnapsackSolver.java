@@ -7,11 +7,11 @@ import java.util.Optional;
 import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.Solver;
 import com.algorithmics.np.knapsack.instance.KnapsackInstance;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 import com.algorithmics.np.knapsack.instance.Bag;
 import com.algorithmics.np.knapsack.instance.Item;
 
-@SolverMapping(name = "KNAPSACK_SOLVER_DYNAMIC_PROGRAMMING", fileExtension = "")
+@SolverMapping(name = "KNAPSACK_SOLVER_DYNAMIC_PROGRAMMING", fileExtensions = "ssv")
 public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag> {
 
     @Override
@@ -61,12 +61,7 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag> {
     }
 
     @Override
-    public Optional<Bag> solveForDefaultFormat(String string) throws ExecutionException {
-        return solve(getProblem(string));
-    }
-
-    @Override
-    public KnapsackInstance getProblem(String string) throws ExecutionException {
+    public KnapsackInstance getProblem(String string) throws UserExecutionException {
         String[] tokens = string.split("[\\s]+");
         try {
             int bagCapacity = Integer.parseInt(tokens[0]);
@@ -79,10 +74,8 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag> {
             }
             return new KnapsackInstance(items, bagCapacity);    
         }catch(NumberFormatException e) {
-            new ExecutionException(e);
+            throw new UserExecutionException(e);
         }
-        return null;
-
     }
 
 }

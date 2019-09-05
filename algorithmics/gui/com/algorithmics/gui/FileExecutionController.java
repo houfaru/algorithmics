@@ -1,8 +1,11 @@
 package com.algorithmics.gui;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 
 import com.algorithmics.invocation.SolverLocator;
 import com.algorithmics.invocation.SolverMapping;
@@ -10,7 +13,7 @@ import com.algorithmics.np.core.NPProblem;
 import com.algorithmics.np.core.ProblemStructure;
 import com.algorithmics.np.core.Solver;
 import com.algorithmics.np.preprocessor.SpecificFormatReader;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -45,13 +48,14 @@ public class FileExecutionController {
         try {
             Solver solver = SolverLocator.locate(mainController.getSolver());
             SolverMapping mapping = solver.getClass().getAnnotation(SolverMapping.class);
-            String extension = mapping.fileExtension();
+            String []extension = mapping.fileExtensions();
+            List<String> exts = Arrays.asList(extension).stream().map(e->"*."+e).collect(Collectors.toList());
             FileChooser.ExtensionFilter extFilter =
-                    new FileChooser.ExtensionFilter("*." + extension + " file", "*." + extension);
+                    new FileChooser.ExtensionFilter(exts + " file", exts);
             fileChooser.getExtensionFilters().add(extFilter);
             File file = fileChooser.showOpenDialog(mainController.primaryStage);
             long currentTimeMillis = System.currentTimeMillis();
-            SpecificFormatReader reader = locateReader(extension);
+            SpecificFormatReader reader = locateReader(getFileExtension(file));
             ProblemStructure instance = reader.readFromFile(file.getAbsolutePath());
             inputTextArea.setText(instance.toString());
             NPProblem o = reader.getWithParameter(instance, 6);
@@ -63,13 +67,24 @@ public class FileExecutionController {
             }
             mainController.appendInfo("execution finished in "
                     + (System.currentTimeMillis() - currentTimeMillis) + " ms");
-        } catch (ExecutionException e) {
+        } catch (UserExecutionException e) {
             mainController.appendException(e);
         }
 
     }
 
-    public SpecificFormatReader locateReader(String extension) throws ExecutionException {
+
+private String getFileExtension(File file) {
+    String name = file.getName();
+    int lastIndexOf = name.lastIndexOf(".");
+    if (lastIndexOf == -1) {
+        return ""; // empty extension
+    }
+    return name.substring(lastIndexOf+1);
+}
+
+
+    public SpecificFormatReader locateReader(String extension) throws UserExecutionException {
         ServiceLoader<SpecificFormatReader> readers =
                 ServiceLoader.load(SpecificFormatReader.class);
         for (SpecificFormatReader specificFormatReader : readers) {
@@ -77,7 +92,7 @@ public class FileExecutionController {
                 return specificFormatReader;
             }
         }
-        throw new ExecutionException("reader for file " + extension + " not found");
+        throw new UserExecutionException("reader for file " + extension + " not found");
     }
 
 }

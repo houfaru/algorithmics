@@ -6,10 +6,10 @@ import java.util.ServiceLoader;
 
 import com.algorithmics.np.core.NPProblem;
 import com.algorithmics.np.core.Solver;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 public class SolverLocator {
-    public static Solver<?, ?> locate(String name) throws ExecutionException {
+    public static Solver<?, ?> locate(String name) throws UserExecutionException {
         ServiceLoader<Solver> solvers = ServiceLoader.load(Solver.class);
         for (Solver<?, ?> solver : solvers) {
             SolverMapping annotation = solver.getClass().getAnnotation(SolverMapping.class);
@@ -17,17 +17,17 @@ public class SolverLocator {
                 return solver;
             }
         }
-        throw new ExecutionException("Solver not found");
+        throw new UserExecutionException("Solver not found");
     }
 
-    public static NPProblem locateProblem(String name) throws ExecutionException {
+    public static NPProblem locateProblem(String name) throws UserExecutionException {
         ServiceLoader<NPProblem> solvers = ServiceLoader.load(NPProblem.class);
         for (NPProblem problem : solvers) {
             if (problem.getClass().getSimpleName().equals(name)) {
                 return problem;
             }
         }
-        throw new ExecutionException("Problem Instance not found");
+        throw new UserExecutionException("Problem Instance not found");
     }
     
     public static List<NPProblem>getProblems(){

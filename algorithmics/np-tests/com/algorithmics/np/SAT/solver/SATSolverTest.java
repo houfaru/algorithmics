@@ -20,7 +20,7 @@ import com.algorithmics.np.SAT.instance.tree.SentenceTree;
 import com.algorithmics.np.SAT.preprocessor.DimacsReader;
 import com.algorithmics.np.SAT.preprocessor.SATParser;
 import com.algorithmics.np.SAT.solver.SATSolverRecursive;
-import com.algorithmics.servicesupport.ExecutionException;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 public class SATSolverTest {
 
@@ -114,7 +114,7 @@ public class SATSolverTest {
     }
 
     @Test
-    public void stringtest() throws ExecutionException {
+    public void stringtest() throws UserExecutionException {
 
         SATSolverRecursive solver = new SATSolverRecursive();
         String satSentence = "(x OR NOT y OR z)AND(NOT x)AND(NOT w OR NOT x OR y OR z) ";
@@ -125,7 +125,7 @@ public class SATSolverTest {
     }
 
     @Test
-    public void testWithNumber() throws ExecutionException {
+    public void testWithNumber() throws UserExecutionException {
 
         SATSolverRecursive solver = new SATSolverRecursive();
         String satSentence = "(0 + 1 + 2) & (-1 + -3)";
@@ -142,7 +142,12 @@ public class SATSolverTest {
                 String satSentenceFilePath = p.toString();
                 DimacsReader dimacsReader = new DimacsReader();
 
-                SentenceInCNF sentence = dimacsReader.readFromFile(satSentenceFilePath);
+                SentenceInCNF sentence = null;
+                try {
+                    sentence = dimacsReader.readFromFile(satSentenceFilePath);
+                } catch (UserExecutionException e) {
+                    fail(e.getMessage());
+                }
                 Optional<VariableAssignment> solution = solver.solve(sentence);
                 assertTrue(solution.isPresent());
             });
@@ -160,14 +165,14 @@ public class SATSolverTest {
             Files.list(Paths.get("data/uuf50-218")).forEach(p -> {
                 String satSentenceFilePath = p.toString();
                 DimacsReader dr = new DimacsReader();
-                SentenceInCNF sentence = dr.readFromFile(satSentenceFilePath);
-                Optional<VariableAssignment> solution;
+
                 try {
+                    SentenceInCNF sentence = dr.readFromFile(satSentenceFilePath);
+                    Optional<VariableAssignment> solution;
                     solution = solver.solve(sentence.toDimacsFile());
                     assertFalse(solution.isPresent());
-                } catch (ExecutionException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                } catch (UserExecutionException e) {
+                    fail(e.getMessage());
                 }
 
             });
