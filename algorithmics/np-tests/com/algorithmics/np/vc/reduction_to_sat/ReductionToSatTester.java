@@ -12,10 +12,11 @@ import com.algorithmics.np.vc.instance.VertexCover;
 import com.algorithmics.np.vc.instance.VertexCoverInstance;
 import com.algorithmics.np.vc.preprocessing.TGFGraphReader;
 import com.algorithmics.np.vc.solver.SATBasedVCSolver;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 public class ReductionToSatTester {
     @Test
-    public void solveTGF() {
+    public void solveTGF() throws UserExecutionException {
         
         SATBasedVCSolver solver = new SATBasedVCSolver();
         TGFGraphReader reader = new TGFGraphReader();

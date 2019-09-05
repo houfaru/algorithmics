@@ -3,6 +3,7 @@ package com.algorithmics.np.npo.core;
 import com.algorithmics.np.core.Certificate;
 import com.algorithmics.np.core.NPHardProblem;
 import com.algorithmics.npo.core.NPOProblem;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 public abstract class OptNPHardDecisionProblem<CERTIFICATE extends Certificate>
         implements NPHardProblem<CERTIFICATE> {
@@ -15,7 +16,7 @@ public abstract class OptNPHardDecisionProblem<CERTIFICATE extends Certificate>
     }
 
     @Override
-    public boolean verify(CERTIFICATE certificate) {
+    public boolean verify(CERTIFICATE certificate) throws UserExecutionException {
         double opt = optimizationProblem.opt(certificate);
         if (opt <= k) {
             return true;
