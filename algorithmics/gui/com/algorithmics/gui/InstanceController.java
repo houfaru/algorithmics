@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.algorithmics.invocation.SolverLocator;
 import com.algorithmics.np.core.NPProblem;
+import com.algorithmics.servicesupport.UserExecutionException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -52,7 +53,12 @@ public class InstanceController {
 
     @FXML
     public void solverSelected() {
-        mainController.setSolver(solverList.getSelectionModel().getSelectedItem());
+        try {
+            mainController.setSolver(solverList.getSelectionModel().getSelectedItem());
+        } catch (UserExecutionException e) {
+            mainController.appendException(e);
+            e.printStackTrace();
+        }
         mainController.appendLog("selecting " + solverList.getSelectionModel().getSelectedItem());
     }
 

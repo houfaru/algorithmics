@@ -94,7 +94,7 @@ public class MainController extends Application {
 
     };
 
-    public void setSolver(String solver) {
+    public void setSolver(String solver) throws UserExecutionException {
         executionController.setSolver(solver);
     }
     public String getSolver() {

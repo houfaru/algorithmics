@@ -1,7 +1,10 @@
 package com.algorithmics.gui;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
+import java.util.Properties;
 
 import com.algorithmics.invocation.SolverLocator;
 import com.algorithmics.np.core.Certificate;
@@ -30,6 +33,23 @@ public class ExecutionController {
         this.mainController = mainController;
     }
 
+    public String loadExample(String solverLabel) throws UserExecutionException  {
+        Properties p=new Properties();
+        InputStream inputStream;
+        inputStream = getClass().getClassLoader().getResourceAsStream("i18example.properties");
+        if (inputStream != null) {
+            try {
+                p.load(inputStream);
+            } catch (IOException e) {
+                throw new UserExecutionException(e);
+            }
+        } else {
+            throw new UserExecutionException(new FileNotFoundException("property file 'i18example' not found in the classpath"));
+        }
+        return p.getProperty(solverLabel);
+        
+    }
+    
     public void initialize() {
         inputTextArea.setWrapText(true);
         inputTextArea.setText(input);
@@ -68,8 +88,11 @@ public class ExecutionController {
         this.problem = problem;
     }
 
-    public void setSolver(String solver) {
+    public void setSolver(String solver) throws UserExecutionException {
         this.solver = solver;
+        input=loadExample(solver);
+        inputTextArea.setText(input);
+        
     }
 
     public String getSolver() {
