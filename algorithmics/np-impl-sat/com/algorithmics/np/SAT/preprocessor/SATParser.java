@@ -10,6 +10,7 @@ import com.algorithmics.sablecc.lexer.LexerException;
 import com.algorithmics.sablecc.node.Start;
 import com.algorithmics.sablecc.parser.Parser;
 import com.algorithmics.sablecc.parser.ParserException;
+import com.algorithmics.servicesupport.InvalidInputFormatException;
 import com.algorithmics.servicesupport.UserExecutionException;
 
 public class SATParser{
@@ -23,9 +24,9 @@ public class SATParser{
 			SentenceTree sentenceTreeResult = (SentenceTree) genericAnalysis.caseStart(startSymbol);
 			return sentenceTreeResult;
 		} catch (ParserException e) {
-		    throw new UserExecutionException(e);
+		    throw new InvalidInputFormatException(e);
 		} catch (LexerException e) {
-		    throw new UserExecutionException(e);
+		    throw new InvalidInputFormatException(e);
 		} catch (IOException e) {
 		    throw new UserExecutionException(e);
 		}

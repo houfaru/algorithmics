@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.Solver;
 import com.algorithmics.np.knapsack.instance.KnapsackInstance;
+import com.algorithmics.servicesupport.InvalidInputFormatException;
 import com.algorithmics.servicesupport.UserExecutionException;
 import com.algorithmics.np.knapsack.instance.Bag;
 import com.algorithmics.np.knapsack.instance.Item;
@@ -74,7 +75,7 @@ public class DynKnapsackSolver implements Solver<KnapsackInstance, Bag> {
             }
             return new KnapsackInstance(items, bagCapacity);    
         }catch(NumberFormatException e) {
-            throw new UserExecutionException(e);
+            throw new InvalidInputFormatException(e);
         }
     }
 

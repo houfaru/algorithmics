@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.algorithmics.invocation.SolverMapping;
 import com.algorithmics.np.core.Solver;
+import com.algorithmics.servicesupport.InvalidInputFormatException;
 import com.algorithmics.servicesupport.UserExecutionException;
 
 /**
@@ -60,7 +61,7 @@ public class JobSequencingGreedySolver implements Solver<JobSequencingInstance, 
             }
             return new JobSequencingInstance(tasks, deadLine);
         } catch (NumberFormatException e) {
-            throw new UserExecutionException(e);
+            throw new InvalidInputFormatException(e);
         }
     }
 
