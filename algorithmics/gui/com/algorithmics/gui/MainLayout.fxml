@@ -61,4 +61,15 @@
       </tabs>
 	</TabPane>
    </center>
+   <right>
+      <TabPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://www.w3.org/2001/XInclude">
+       <tabs>
+        <Tab closable="false" text="Help">
+           <content>
+               <fx:include fx:id="help" source="HelpLayout.fxml" />
+           </content>
+        </Tab>
+    </tabs>
+    </TabPane>
+   </right>
 </BorderPane>
