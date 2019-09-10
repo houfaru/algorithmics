@@ -1,6 +1,8 @@
 package com.algorithmics.gui;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,10 +24,13 @@ public class HelpController {
 
     MainController mainController;
 
-    public void initialize() {
+    public void initialize() throws MalformedURLException {
         final WebEngine webEngine = helpPage.getEngine();
-
-    webEngine.load("http://java2s.com");
+        String location =
+                new File(
+                        "help" + File.separator + "sat.html"
+                ).toURI().toURL().toExternalForm();
+        webEngine.load(location);
     }
 
     public void init(MainController mainController) {
