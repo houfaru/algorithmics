@@ -55,11 +55,13 @@ public class InstanceController {
     public void solverSelected() {
         try {
             mainController.setSolver(solverList.getSelectionModel().getSelectedItem());
+            mainController.loadHelp();
         } catch (UserExecutionException e) {
             mainController.appendException(e);
             e.printStackTrace();
         }
         mainController.appendLog("selecting " + solverList.getSelectionModel().getSelectedItem());
+        
     }
 
 }

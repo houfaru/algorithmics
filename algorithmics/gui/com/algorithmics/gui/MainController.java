@@ -33,6 +33,8 @@ public class MainController extends Application {
     FileExecutionController fileExecutionController;
     @FXML
     InstanceController instanceController;
+    @FXML
+    HelpController helpController;
 
     public static void main(String[] args) {
         launch(args);
@@ -53,12 +55,12 @@ public class MainController extends Application {
 
     }
 
-    public void initialize() {
+    public void initialize() throws UserExecutionException {
         consoleController.init(this);
         executionController.init(this);
         instanceController.init(this);
         fileExecutionController.init(this);
-
+        helpController.init(this);
     }
 
     public void appendLog(String log) {
@@ -94,6 +96,10 @@ public class MainController extends Application {
 
     };
 
+    public void loadHelp() throws UserExecutionException {
+        helpController.renderHelpPage();
+    }
+    
     public void setSolver(String solver) throws UserExecutionException {
         executionController.setSolver(solver);
     }
